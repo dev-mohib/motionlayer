@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="99px" height="99px" viewBox="0 0 99 99" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <defs>
+        <linearGradient x1="15.00255%" y1="13.0429669%" x2="125.398403%" y2="121.381485%" id="linearGradient-1">
+            <stop stop-color="#00A3FF" offset="0%"></stop>
+            <stop stop-color="#CE00FF" offset="100%"></stop>
+            <stop stop-color="#CE00FF" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="99" height="99" rx="49.5"></rect>
+        <filter x="-0.5%" y="-0.5%" width="101.0%" height="101.0%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="-1" dy="-1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="103.948553%" y1="38.1506257%" x2="-26.160273%" y2="69.3841225%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#CE00FF" offset="100%"></stop>
+            <stop stop-color="#CE00FF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="3.73328489%" y1="14.1008966%" x2="96.705894%" y2="86.2579799%" id="linearGradient-6">
+            <stop stop-color="#00A3FF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-554.000000, -515.000000)">
+            <g id="Group" transform="translate(432.000000, 515.000000)">
+                <g id="Path" transform="translate(122.000000, 0.000000)">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <g id="Mask">
+                        <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-2"></use>
+                    </g>
+                    <path d="M-0.182669071,82.8123685 L21.1624112,61.3236516 C23.1084739,59.3644933 26.274281,59.3538772 28.2334393,61.2999399 C28.2413696,61.3078173 28.2492735,61.3157212 28.2571509,61.3236516 L39.4073359,72.5488691 C41.3533986,74.5080274 44.5192057,74.5186434 46.478364,72.5725808 C46.4862943,72.5647034 46.4941982,72.5567995 46.5020756,72.5488691 L76.1950372,42.6560958 C78.1410999,40.6969375 81.306907,40.6863215 83.2660652,42.6323842 C83.2739956,42.6402615 83.2818995,42.6481654 83.2897768,42.6560958 L105.817331,65.3352437 L105.817331,65.3352437 L88.3880886,105.084855 L-0.182669071,105.084855" fill="url(#linearGradient-5)" mask="url(#mask-3)"></path>
+                    <circle id="Oval" fill="url(#linearGradient-6)" mask="url(#mask-3)" cx="34.5" cy="35.5" r="15.5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

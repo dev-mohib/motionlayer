@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.text-tomato{
+    color: #F94F4F;
+  }
+  
+  .bg-tomato  {
+    background-color: #F94F4F;
+  }
+  
+  .text-teal{
+    color: #115E59;
+  }
+  
+  .bg-teal{
+    background-color: #115E59;
+  }
+  
+  
+  .menu-dialog-{
+      opacity: 0;
+  -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    -o-transition: opacity 1s ease-in;
+    transition: opacity 1s ease-in;
+  }
+  
+  
+  .layer-item {
+    width: 200px;
+    border: 1px solid grey;
+    margin-bottom: 8px;
+    background-color: lightblue;
+    padding: 8px;
+  }
+  
+  @keyframes inAnimation {
+    0% {
+      opacity: 0;
+      visibility: hidden;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  @keyframes outAnimation {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  
+  
+  .play-icon{
+    color: red !important;
+  }
+  
+  
+  
+  /* The switch - the box around the slider */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 24px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  *{
+    /* color : #fafafa; */
+    -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  
+  .btn{
+    @apply bg-teal-800 text-white border-none hover:bg-teal-700 font-bold px-4 py-1 cursor-pointer
+  }
+  
+  .gradient {
+    @apply bg-gradient-to-r from-teal-700 via-teal-500 to-blue-500
+  }
+  .h-90 {
+    height: 80vh;
+  }
+  
+  .flex-col-center{
+    @apply flex flex-col justify-center items-center
+  }
+  .flex-row-center{
+    @apply flex flex-row justify-center items-center
+  }
+  .flex-row-between{
+    @apply flex flex-row justify-between items-center
+  }
+  .flex-col-between{
+    @apply flex flex-col justify-between items-center
+  }
+  
+  .custom {
+    @apply text-red-500 font-bold
+  }
+  
+  select{
+    @apply bg-slate-600 rounded text-gray-200 px-5 transition font-sans font-bold py-1 cursor-pointer border mb-2 items-center
+  }
+  select option{
+    @apply text-gray-200 font-sans font-normal cursor-pointer my-1
+  
+  }
+  
+  
+  
+  
+  /* LANDING PAGE */

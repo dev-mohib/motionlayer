@@ -1,0 +1,40 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@headlessui/react": "^1.4.2",
+        "@inertiajs/react": "^1.0.0",
+        "@tailwindcss/forms": "^0.5.3",
+        "@types/fabric": "^5.3.3",
+        "@types/react": "^18.2.20",
+        "@types/react-beautiful-dnd": "^13.1.4",
+        "@types/react-dom": "^18.2.7",
+        "@types/ziggy-js": "^1.3.2",
+        "@vitejs/plugin-react": "^4.0.3",
+        "autoprefixer": "^10.4.12",
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.7.5",
+        "postcss": "^8.4.18",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tailwindcss": "^3.2.1",
+        "ts-loader": "^9.4.4",
+        "typescript": "^5.1.6",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.9.5",
+        "fabric": "^5.3.0",
+        "lodash-es": "^4.17.21",
+        "lodash-move": "^1.1.1",
+        "react-beautiful-dnd": "^13.1.1",
+        "react-redux": "^8.1.2",
+        "redux-devtools-extension": "^2.13.9",
+        "redux-thunk": "^2.4.2",
+        "ziggy-js": "^1.6.1"
+    }
+}
