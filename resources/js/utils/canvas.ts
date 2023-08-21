@@ -14,8 +14,9 @@ function getSupportedMimeTypes() {
 
 
 
-  function downloadCanvas(recordedBlobs : any) {
-    console.log("Data to download", recordedBlobs)
+  function downloadCanvasRecording(recordedBlobs : Blob[]) {
+    if(!recordedBlobs)
+    return
     var blob = new Blob(recordedBlobs, {
     type: 'video/mp4'
     });
@@ -26,11 +27,11 @@ function getSupportedMimeTypes() {
     a.style = 'display: none';
     a.href = url;
     a.download = 'canvas_recording.mp4';
-    const confirm = window.confirm("Do you really want to save the recording ? ")
-    if(confirm)
+    // const confirm = window.confirm("Do you really want to save the recording ? ")
+    // if(confirm)
       a.click();
     window.URL.revokeObjectURL(url);
   }
 
 
-  export {getSupportedMimeTypes, downloadCanvas}
+  export {getSupportedMimeTypes, downloadCanvasRecording}

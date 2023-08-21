@@ -46,10 +46,15 @@ export interface Pagination{
 }
 
 export interface GalleryVideo{
-    name : string
+    id: number,
+    title : string,
+    source: string
+    thumbnail: string
+    views? : number,
+    likes?: number
 }
 
-export interface GalleryPagination extends Pagination{
+export interface GalleryVideoPagination extends Pagination{
     data : GalleryVideo[]
 }
 
@@ -92,6 +97,7 @@ export interface EditorState {
     openedMenu : string,
     isEditing : boolean,
     isAutoplay : boolean,
+    countDown : number,
     layers : LayerType[],
     animation : null | AnimationType,
     isRecording : boolean,

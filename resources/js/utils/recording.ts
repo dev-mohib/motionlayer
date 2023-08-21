@@ -1,13 +1,12 @@
-import { downloadCanvas, getSupportedMimeTypes } from './canvas'
+import { getSupportedMimeTypes } from './canvas'
 
-let mediaRecorder : any, recordedBlobs : any;
+let mediaRecorder : MediaRecorder, recordedBlobs : Blob[] | BlobPart[];
 
-export const startRecording = () => {
+export const startRecorder = () => {
     recordedBlobs = [];
     var mainCanvas : any = document.querySelector("#myCanvas");
-
     var stream = mainCanvas.captureStream(30)
-var options = {mimeType: getSupportedMimeTypes()[0]};
+    var options = {mimeType: getSupportedMimeTypes()[0]};
 try {
     mediaRecorder = new MediaRecorder(stream, options);
 } catch (e) {
@@ -15,31 +14,57 @@ try {
     return false;
 }
 
-mediaRecorder.onstop = (event : any) => {
-    downloadCanvas(recordedBlobs)
-    };
     mediaRecorder.ondataavailable = handleDataAvailable;
     mediaRecorder.start();
     return true
 }
 
-export function saveRecording(){
+export const stopRecorder = () => {
     try {
         mediaRecorder.stop()
+        // console.log("recorder stoped, blobs ", recordedBlobs)
+        return recordedBlobs
     } catch (error) {
         console.error("Error while Stop recorder : " + error)
         return false
     }
-    return true
 }
 
-function handleDataAvailable(event : any) {
+export const getRecordedBlob = () => {
+    var blob = new Blob(recordedBlobs, {
+        type: 'video/mp4',
+        });
+    return blob
+}
+
+function handleDataAvailable(event : BlobEvent) {
     if (event.data && event.data.size > 0) {
         recordedBlobs.push(event.data);
     }
 }
 
 
+export const downloadRecording = (title : any) =>{
+    console.log({downloadTitle: title})
+    if(recordedBlobs.length == 0){
+        console.log("no blob chunks")
+        return
+    }
+    var blob = new Blob(recordedBlobs, {
+        type: 'video/mp4'
+    });
+  
+    var url = URL.createObjectURL(blob);
+    var a : any = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.href = url;
+    a.download = `${title == ''?'canvas_recording': title}.mp4`;
+    // const confirm = window.confirm("Do you really want to save the recording ? ")
+    // if(confirm)
+      a.click();
+    window.URL.revokeObjectURL(url);
+}
 export function autoSave(saveIn = 1000, afterSave : any){
     var date = new Date().getTime() + saveIn
 var x = setInterval(function() {
@@ -59,9 +84,73 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     // document.getElementById("demo").innerHTML = "EXPIRED";
-    saveRecording()
+    stopRecorder()
     afterSave()
   }
 }, 1000);
 
 }
+
+class MyMediaRecorder{
+    mediaRecorder!: MediaRecorder;
+    recorderBlobs : Blob[] | BlobPart[] = []
+
+    initialize(){
+        recordedBlobs = [];
+        var mainCanvas : any = document.querySelector("#myCanvas");
+        var stream = mainCanvas.captureStream(30)
+        var options = {mimeType: getSupportedMimeTypes()[0]};
+        try {
+            this.mediaRecorder = new MediaRecorder(stream, options);
+            console.log("recorder initialized")
+        } catch (e) {
+            console.error('Exception while creating MediaRecorder:', e);
+        }
+
+        this.mediaRecorder.ondataavailable = this.pushrecorderBlobs
+        this.mediaRecorder.start();   
+    }
+    pushrecorderBlobs(event:BlobEvent){
+        if (event.data && event.data.size > 0) {
+            console.log("pushing blob chunk")
+            this.recorderBlobs.push(event.data);
+        }
+    }
+    
+    start(){
+        console.log("recorder started")
+        // this.mediaRecorder.start();    
+    }
+    stop(){
+        try {
+            this.mediaRecorder.stop()
+        } catch (error) {
+            console.error("Error while Stop recorder : " + error)
+        }
+    }
+
+    download(){
+    if(this.recorderBlobs.length == 0){
+        console.log("no blob chunks")
+        return
+    }
+    var blob = new Blob(this.recorderBlobs, {
+    type: 'video/mp4'
+    });
+  
+    var url = URL.createObjectURL(blob);
+    var a : any = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.href = url;
+    a.download = 'canvas_recording.mp4';
+    // const confirm = window.confirm("Do you really want to save the recording ? ")
+    // if(confirm)
+      a.click();
+    window.URL.revokeObjectURL(url);
+    }
+
+}
+
+export { recordedBlobs }
+// export const myMediaRecorder = new MyMediaRecorder()

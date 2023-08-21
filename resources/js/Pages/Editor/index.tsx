@@ -1,30 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../state/hooks'
-import { addLayer, disableRecording, enableEditing, hideMenu } from '@/state/store'
+import { hideMenu } from '@/state/store'
 import TopMenuBar from '@/Components/menu'
 import Fabric from './fabric/canvas'
 import UploadView from './upload_view'
-
-import { saveRecording } from '@/utils/recording'
-
+import { Head, usePage } from '@inertiajs/react'
 
 const Editor = () => {
+  const {message} = usePage().props
+  // console.log({pageMsg : message})
   const dispatch = useAppDispatch()
   const { isRecording, isEditing, layers, bgColor } = useAppSelector(state => state.editorReducer)
-  var _added = false
-  // TODO: Test Hook : Remove in Production
-  // useEffect(() => {
-  //   if(!_added){
-  //     images.map((l, i) => dispatch(addLayer({index : i, url : l,name : "leave_"+i })))
-  //     dispatch(enableEditing())
-  //   }
-  //   _added = true
-  // },[])
 
   return (
     <div className=' min-h-screen' 
     style={{backgroundColor : bgColor}}
     >
+      <Head title='Editor'/>
       <TopMenuBar />
       <div onClick={()  => dispatch(hideMenu())} className='h-screen'>
         {isEditing ? 
@@ -39,24 +31,8 @@ const Editor = () => {
 }
 
 const Recording = () => {
-  const dispatch = useAppDispatch()
-  const { videoLength } = useAppSelector(s => s.editorReducer)
-  const [countdown, setCountdown] = useState(0)
-  useEffect(() => {
-    var countDownTime = new Date().getTime() + (videoLength * 1000)
-    var x = setInterval(function() {
-    var now = new Date().getTime();
-    var distance = countDownTime - now;
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    setCountdown(seconds)
-    if (distance < 0) {
-      clearInterval(x);
-      saveRecording()
-      dispatch(disableRecording())
-      setCountdown(0)
-    }
-  }, 1000);
-},[])
+  const { countDown } = useAppSelector(s => s.editorReducer)
+if(countDown > 0)
   return (
     <div className='h-16 w-52 bg-gray-700 rounded z-50 absolute bottom-5 left-3 shadow-3xl border border-gray-600'>
         <div className='flex flex-row justify-between items-center'>
@@ -66,12 +42,12 @@ const Recording = () => {
         </div>
         <div className='h-14 bg-red-700 my-1' style={{width : '2px'}} />
           <div className='h-16 w-12 flex-row-center cursor-pointer rounded-tr roundedbr'>
-            {/* <CgPlayStopO size={24} className='play-icon' /> */}
-            {countdown !== 0 && `${countdown}s`}
+            {countDown}s
           </div>
       </div>
       </div>
   )
+  else return null
 }
 
 export default Editor

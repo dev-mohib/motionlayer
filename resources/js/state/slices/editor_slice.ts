@@ -11,6 +11,7 @@ import { LayerType,AnimationType,Shadow,EditorState, Skew } from "@/types/index.
     isEditing : false,
     animation : null,
     isRecording : false,
+    countDown : 5,
     bgColor : "#374151",
     isAnimating : false,
     animationName : 'TranslateV',
@@ -44,6 +45,13 @@ export const editorSlice = createSlice({
         },
         updateName : (state, action : PayloadAction<string>) => {
           state.projectName = action.payload
+        },
+        decreaseCountDown : (state) => {
+          if(state.countDown >0  )
+            state.countDown -= 1
+        },
+        setCountDown : (state, action:PayloadAction<number>) => {
+            state.countDown = action.payload
         },
         enableAutoplay : (state)=> {
           state.isAutoplay = true
@@ -104,6 +112,7 @@ export const editorSlice = createSlice({
         },
         setVideoLength : (state, action : PayloadAction<number>) => {
           state.videoLength = action.payload
+          state.countDown = action.payload
         },
         setShadow : (state, action : PayloadAction<Shadow>) => {
           state.shadow = {...state.shadow, ...action.payload}

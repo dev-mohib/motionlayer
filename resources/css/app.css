@@ -153,10 +153,18 @@
   }
   
   
-  .btn{
+  .record-btn{
     @apply bg-teal-800 text-white border-none hover:bg-teal-700 font-bold px-4 py-1 cursor-pointer
   }
-  
+  .btn{
+    @apply inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out  hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)]  focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]
+  }
+  .btn-primary{
+    @apply bg-blue-700 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-700
+  }
+  .btn-success{
+    @apply bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-700
+  }
   .gradient {
     @apply bg-gradient-to-r from-teal-700 via-teal-500 to-blue-500
   }
@@ -189,7 +197,25 @@
   
   }
   
-  
+  dialog {
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: fit-content;
+
+    height: -moz-fit-content;
+    height: -webkit-fit-content;
+    height: fit-content;
+
+    visibility:hidden;
+    opacity:0;
+    transition:visibility 10s linear 10s,opacity 10s linear;
+}
+
+dialog[open] {   
+    visibility:visible;
+    opacity:1;
+    transition-delay:0s;
+}
   
   
   /* LANDING PAGE */

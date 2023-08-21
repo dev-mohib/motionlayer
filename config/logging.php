@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL', 'single'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,14 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
-
+        'browser' => [
+            'driver' => 'monolog',
+            'handler' => Monolog\Handler\BrowserConsoleHandler::class,
+            'formatter' => Monolog\Formatter\HtmlFormatter::class,
+            'formatter_with' => [
+                'dateFormat' => 'Y-m-d',
+            ],
+        ],
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

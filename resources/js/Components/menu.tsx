@@ -1,12 +1,14 @@
-import React, { useRef } from 'react'
+import React, { FormEvent, FormEventHandler, createRef, useEffect, useRef } from 'react'
+import { useForm } from '@inertiajs/react'
 import {  EyeIcon, EffectIcon, RotateClockIcon, RotateAnticlockIcon, 
   VerticalArrowIcon, HorizontalArrowIcon, PlayIcon, Pause, LayerIcon} from './icons'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
-import { hideMenu,showMenu, enableAnimating, disableAnimating, setAnimationName, enableRecording, setEaseType, setAnimationDuration, setAnimationDelta, setTempLayers, setVideoLength } from '../state/store'
+import { hideMenu,showMenu, enableAnimating, disableAnimating, setAnimationName, enableRecording, setEaseType, setAnimationDuration, setAnimationDelta, setTempLayers, setVideoLength } from '@/state/store'
 import { easeTypes } from '@/utils/animation'
 import Effects from './Effects'
 import View from './View'
 import Layers from './Layers'
+import { getRecordedBlob, downloadRecording, recordedBlobs } from '@/utils/recording'
 const mountedStyle = {
   animation: "inAnimation 250ms ease-in"
 };
@@ -17,8 +19,9 @@ const unmountedStyle = {
 
 const TopMenuBar = () => {
   const menuContent = useRef(null)
-
+  const dialogRef = createRef()
   const dispatch = useAppDispatch()
+  const { countDown, isRecording } = useAppSelector(s=>s.editorReducer)
   const { isMenuOpened, openedMenu, isAnimating } = useAppSelector(s => s.editorReducer)
   const handleMenu = (option : string) => {
     if(openedMenu === option && isMenuOpened){
@@ -31,10 +34,24 @@ const TopMenuBar = () => {
       },300)
     }
   }
+
+  useEffect(() => {
+    if(countDown <= 0){
+      setTimeout(() => {
+        // @ts-ignore
+        dialogRef.current.showModal()
+        dispatch(disableAnimating())
+      },200)
+    }
+  },[countDown, isRecording])
 return (
   <div className='fixed top-0 left-0 right-0 z-50'>
+  <Dialog ref={dialogRef}/>
   <div className='w-full bg-gray-800 h-12 flex flex-row justify-between items-center p-0'>
-    <img src='/logo_3.png' className="h-16 -mb-1" />
+    <img src='/logo_3.png' className="h-16 -mb-1" onClick={() => {
+      // @ts-ignore
+      dialogRef.current.showModal()
+    }}/>
     <div className='flex flex-row text-white z-50'>
       <div className="relative inline-block text-left mx-2">
         <div className='flex flex-row text-white'>
@@ -78,6 +95,52 @@ return (
   )
 }
 
+const Dialog = React.forwardRef((props, ref) => {
+  const postData : { video : any, title: string, fileName: string
+  } = {
+    video : null, 
+    title: '',
+    fileName : `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`
+  }
+  const { data, post, setData } = useForm(postData)
+  const handlePostRecording = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log("submitting the form")
+      post(route('video.store'),{forceFormData : true});
+  }
+
+  return (
+    <dialog
+      className=' bg-gray-800 rounded-lg shadow-xl'
+      // @ts-ignore
+      ref={ref}
+      onFocus={() => setData("video", getRecordedBlob())}
+    >
+      <div className='text-white flex justify-between'>
+          <h1 className='font-semibold text-base p-4'>Video Recorded</h1>
+          <span className='cursor-pointer p-4' onClick={() => {
+          // @ts-ignore
+          ref.current.close()
+        }}>X</span>
+        </div>
+        <div className='flex flex-col my-16 ml-8'>
+          <form onSubmit={handlePostRecording}>
+            <h1 className='font-normal text-white text-xl my-3'>Video recorded successfully. Select the action</h1>
+            <div className="mb-4 w-1/2">
+              {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+                Title
+              </label> */}
+              <input value={data.title} onChange={e => setData("title", e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Enter Video Title(Optional)" required/>
+            </div>
+            <div className='self-end px-10 mt-16 flex'>
+              <button className='btn btn-primary  mx-10' onClick={() => downloadRecording(data.title)}>Download</button>
+              <input type='submit' className='btn btn-success' value="Post Video"/>
+            </div>
+          </form>
+        </div>
+    </dialog>
+  )
+})
 
 const Play = () => {
   const { isAnimating, isEditing, animationDuration, animationDelta, animationName } = useAppSelector(s => s.editorReducer)
