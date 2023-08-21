@@ -1,0 +1,1 @@
+import{G as e,H as n,I as c,J as a}from"./app-ff33ea2f.js";function r(t=e){const o=t===e?n:c(t);return function(){const{store:s}=o();return s}}const p=r();function i(t=e){const o=t===e?p:r(t);return function(){return o().dispatch}}const x=i(),d=()=>x(),f=a;export{d as a,f as u};
