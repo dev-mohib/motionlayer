@@ -98,8 +98,10 @@ return (
 const Dialog = React.forwardRef((props, ref) => {
   const [ title, settitle ] = useState('')
 
-  const handlePostRecording = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handlePostRecording = (
+    // e?: FormEvent<HTMLFormElement>
+    ) => {
+    // e.preventDefault()
     
     const formData = new FormData()
     formData.append('title', title)
@@ -129,7 +131,7 @@ const Dialog = React.forwardRef((props, ref) => {
         }}>X</span>
         </div>
         <div className='flex flex-col my-16 ml-8'>
-          <form onSubmit={handlePostRecording}>
+          <form>
             <h1 className='font-normal text-white text-xl my-3'>Video recorded successfully. Select the action</h1>
             <div className="mb-4 w-1/2">
               {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
@@ -139,7 +141,7 @@ const Dialog = React.forwardRef((props, ref) => {
             </div>
             <div className='self-end px-10 mt-16 flex'>
               <button className='btn btn-primary  mx-10' onClick={() => downloadRecording(title)}>Download</button>
-              <input type='submit' className='btn btn-success' value="Post Video"/>
+              <input type='submit' onClick={handlePostRecording}  className='btn btn-success' value="Post Video"/>
             </div>
           </form>
         </div>

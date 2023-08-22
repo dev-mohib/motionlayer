@@ -28,9 +28,13 @@ class VideoController extends Controller
     public function store(Request $request) {
         $title = $request->title??'video_canvas';
         $file = $request->file('video');
-        Log::info(['$file' => $file->__toString()]);
-        Log::info(['fileSize'=>$file->getSize()]);
-        Log::info(['fileName' => $file->getFilename()]);
+        Log::info([
+            'title' => $title,
+            '$file' => $file->__toString(),
+            'fileSize'=>$file->getSize(),
+            'fileName' => $file->getFilename()
+        ]);
+        
         // Log::info([''])
         return redirect('/');
         $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
