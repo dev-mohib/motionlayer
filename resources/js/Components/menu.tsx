@@ -106,16 +106,19 @@ const Dialog = React.forwardRef((props, ref) => {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
-    const file = new File([getRecordedBlob()], title + '.mp4')
-    console.log({file})
+    const blobs = getRecordedBlob()
+    const file = new File([blobs], title + '.mp4')
+    // console.log({blobs : blobs.size})
+    
     formData.append('video', file)
-    formData.append('blobs', `${getRecordedBlob()}`)
-    formData.append('fSize', file.size.toString()??'No size available')
+    formData.append('blobs', `${blobs.toString()}`)
+    formData.append('blobSize', `${blobs.size}`)
+    formData.append('fileSize', file.size.toString()??'No size available')
     const values = formData.values.toString()
-    window.alert(`
-      fileName => ${file.name}
-      fileSize => ${file.size}, 
-      `)
+    // window.alert(`
+    //   fileName => ${file.name}
+    //   fileSize => ${file.size}, 
+    //   `)
     router.post('/video', formData)
   }
 
