@@ -108,7 +108,7 @@ const Dialog = React.forwardRef((props, ref) => {
     console.log({file})
     formData.append('video', file)
     const values = formData.values.toString()
-    alert(`
+    window.alert(`
       fileName => ${file.name}
       fileSize => ${file.size}, 
       `)
