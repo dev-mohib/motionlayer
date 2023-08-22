@@ -29,7 +29,26 @@ export const stopRecorder = () => {
         return false
     }
 }
+export const sendPostRequest = (title : string, router : any) => { 
+    const fileName = `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('fileName', fileName)
+   
+    const file = new File(recordedBlobs, title + '.mp4')
+    // console.log({blobs : blobs.size})
+    
+    formData.append('video', file)
+    formData.append('blobs', `${recordedBlobs.toString()}`)
+    formData.append('fileSize', file.size.toString()??'No size available')
+    const values = formData.values.toString()
+    // window.alert(`
+    //   fileName => ${file.name}
+    //   fileSize => ${file.size}, 
+    //   `)
+    router.post('/video', formData)
 
+}
 export const getRecordedBlob = () => {
     var blob = new Blob(recordedBlobs, {
         type: 'video/mp4',

@@ -30,7 +30,6 @@ class VideoController extends Controller
         $file = $request->file('video');
         Log::info([
             'blobs' => $request->blobs,
-            'blobSize' => $request->blobSize,
             'fileSize'=>$request->fileSize,
             'videoFile'=> $file
         ]);

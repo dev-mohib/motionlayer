@@ -8,7 +8,7 @@ import { easeTypes } from '@/utils/animation'
 import Effects from './Effects'
 import View from './View'
 import Layers from './Layers'
-import { getRecordedBlob, downloadRecording, recordedBlobs } from '@/utils/recording'
+import { getRecordedBlob, downloadRecording, recordedBlobs, sendPostRequest } from '@/utils/recording'
 const mountedStyle = {
   animation: "inAnimation 250ms ease-in"
 };
@@ -102,24 +102,24 @@ const Dialog = React.forwardRef((props, ref) => {
     // e?: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
+    sendPostRequest(title, router)
+    // const formData = new FormData()
+    // formData.append('title', title)
+    // formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
+    // const blobs = getRecordedBlob()
+    // const file = new File([blobs], title + '.mp4')
+    // // console.log({blobs : blobs.size})
     
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
-    const blobs = getRecordedBlob()
-    const file = new File([blobs], title + '.mp4')
-    // console.log({blobs : blobs.size})
-    
-    formData.append('video', file)
-    formData.append('blobs', `${blobs.toString()}`)
-    formData.append('blobSize', `${blobs.size}`)
-    formData.append('fileSize', file.size.toString()??'No size available')
-    const values = formData.values.toString()
-    // window.alert(`
-    //   fileName => ${file.name}
-    //   fileSize => ${file.size}, 
-    //   `)
-    router.post('/video', formData)
+    // formData.append('video', file)
+    // formData.append('blobs', `${blobs.toString()}`)
+    // formData.append('blobSize', `${blobs.size}`)
+    // formData.append('fileSize', file.size.toString()??'No size available')
+    // const values = formData.values.toString()
+    // // window.alert(`
+    // //   fileName => ${file.name}
+    // //   fileSize => ${file.size}, 
+    // //   `)
+    // router.post('/video', formData)
   }
 
   return (
