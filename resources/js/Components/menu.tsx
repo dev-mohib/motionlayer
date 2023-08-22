@@ -1,5 +1,5 @@
-import React, { FormEvent, FormEventHandler, createRef, useEffect, useRef } from 'react'
-import { useForm } from '@inertiajs/react'
+import React, { FormEvent, FormEventHandler, createRef, useEffect, useRef, useState } from 'react'
+import { useForm, router } from '@inertiajs/react'
 import {  EyeIcon, EffectIcon, RotateClockIcon, RotateAnticlockIcon, 
   VerticalArrowIcon, HorizontalArrowIcon, PlayIcon, Pause, LayerIcon} from './icons'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
@@ -96,17 +96,18 @@ return (
 }
 
 const Dialog = React.forwardRef((props, ref) => {
-  const postData : { video : any, title: string, fileName: string
-  } = {
-    video : null, 
-    title: '',
-    fileName : `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`
-  }
-  const { data, post, setData } = useForm(postData)
+  const [ title, settitle ] = useState('')
+
   const handlePostRecording = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("submitting the form")
-      post(route('video.store'),{forceFormData : true});
+    
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
+    const file = new File([getRecordedBlob()], title + '.mp4')
+    formData.append('video', file)
+
+    router.post('/video', formData)
   }
 
   return (
@@ -114,7 +115,6 @@ const Dialog = React.forwardRef((props, ref) => {
       className=' bg-gray-800 rounded-lg shadow-xl'
       // @ts-ignore
       ref={ref}
-      onFocus={() => setData("video", getRecordedBlob())}
     >
       <div className='text-white flex justify-between'>
           <h1 className='font-semibold text-base p-4'>Video Recorded</h1>
@@ -130,10 +130,10 @@ const Dialog = React.forwardRef((props, ref) => {
               {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
                 Title
               </label> */}
-              <input value={data.title} onChange={e => setData("title", e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Enter Video Title(Optional)" required/>
+              <input value={title} onChange={e => settitle(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Enter Video Title(Optional)" required/>
             </div>
             <div className='self-end px-10 mt-16 flex'>
-              <button className='btn btn-primary  mx-10' onClick={() => downloadRecording(data.title)}>Download</button>
+              <button className='btn btn-primary  mx-10' onClick={() => downloadRecording(title)}>Download</button>
               <input type='submit' className='btn btn-success' value="Post Video"/>
             </div>
           </form>

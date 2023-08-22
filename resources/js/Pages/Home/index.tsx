@@ -56,7 +56,7 @@ const Index = () => {
         <div className='md:px-10 sm:px-4 lg:px-36 xl:px-64 mt-10'>
             <h1 className={'text-white font-extrabold px-4 my-3 text-2xl'}>Latest Videos</h1>
             <div className='mt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 '>
-                {videos.data.map(((video, i) => <div key={video.id} onClick={() => handleViewVideo(video)}><Card video={video} /></div>))}
+                {videos.data.map(((video, i) => <div key={video.id}><Card onClick={() => handleViewVideo(video)} video={video} /></div>))}
             </div>
         </div>
         <Modal isOpen={!!selectedVideo} onRequestClose={closeModal} 
@@ -68,15 +68,18 @@ const Index = () => {
         </div>
         {selectedVideo && (
           <div className='h-56'>
-             <video className='' controls>
+             <video className='' autoPlay loop style={{
+                width: '90vw',
+                height: '80vh'
+             }}>
                 <source src={`/storage/videos/`+selectedVideo.source} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
             <h1 className='my-3 font-bold text-2xl'>{selectedVideo.title}</h1>
-            <div className='w-full flex justify-end'>
+            {/* <div className='w-full flex justify-end'>
                 <button className='btn btn-primary' onClick={handleDownload}>Download</button>
-            </div>
-            <a ref={aRef} className='hidden' href={`/storage/videos/`+selectedVideo.source} download={selectedVideo.title + '.mp4'}></a>
+            </div> */}
+            {/* <a ref={aRef} className='hidden' href={`/storage/videos/`+selectedVideo.source} download={selectedVideo.title + '.mp4'}></a> */}
           </div>
         )}
       </Modal>
@@ -85,17 +88,24 @@ const Index = () => {
 }
 
 
-const Card = ({video}:{video : GalleryVideo}) => {
+const Card = ({video, onClick}:{video : GalleryVideo, onClick : any}) => {
     return (
         <div
             className=' shadow-lg rounded border-4 border-gray-700'
          >
-            <div className='w-full  rounded hover:bg-gray-600 cursor-pointer hover:shadow-lg'>
-                <div className={`w-full ${getColor()}`}>
+            <div className='w-full rounded hover:bg-gray-600 cursor-pointer hover:shadow-lg'>
+                <div onClick={onClick}  className={`w-full ${getColor()}`}>
                     <img className='object-cover w-full' src={`/storage/thumbnails/`+video.thumbnail}/>
                 </div>
-                <div className='h-20 mt-3 bg-gray-500 pt-4 px-2'>
-                    <h1 className='text-white font-bold'>{video.title}</h1>
+                <div className='flex justify-between'>
+                    <div className='h-20 mt-3 bg-gray-500 pt-4 px-2'>
+                        <h1 className='text-white font-bold'>{video.title}</h1>
+                    </div>
+                    <label htmlFor="dropdown" className="block text-gray-700 font-semibold mb-2">:</label>
+                    <select id="dropdown" className="block  p-0.5 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
+                        <option value="option1">Download</option>
+                        <option value="option2">Delete</option>
+                    </select>
                 </div>
             </div>
         </div>

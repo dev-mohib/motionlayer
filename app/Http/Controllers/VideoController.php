@@ -31,7 +31,6 @@ class VideoController extends Controller
         $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
         $videoPath = $file->path();
         $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
-
         VideoService::generateThumbnail($videoPath, $outputPath);
         $post = VideoPost::create([
             'title' => $title,

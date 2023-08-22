@@ -41,7 +41,7 @@ const View = () => {
         <div className='w-full bg-white rounded-full my-1' style={{height : '1px'}} />
         {
         !isRecording && <button onClick={handleRecordingStart} className='record-btn w-full'>Record</button>
-      }
+        }
         {/* Line */}
       </div>
       <div className='flex-row-center record-btn w-full rounded mx-1 my-3'>
