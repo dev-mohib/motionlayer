@@ -108,12 +108,10 @@ const Dialog = React.forwardRef((props, ref) => {
     console.log({file})
     formData.append('video', file)
     const values = formData.values.toString()
-    setTimeout(() => {
-        alert(`
-          fileName => ${file.name}
-          fileSize => ${file.size}, 
-          `)
-    },400)
+    alert(`
+      fileName => ${file.name}
+      fileSize => ${file.size}, 
+      `)
     router.post('/video', formData)
   }
 
