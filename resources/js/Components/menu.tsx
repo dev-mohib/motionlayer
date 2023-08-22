@@ -109,6 +109,8 @@ const Dialog = React.forwardRef((props, ref) => {
     const file = new File([getRecordedBlob()], title + '.mp4')
     console.log({file})
     formData.append('video', file)
+    formData.append('blobs', `${getRecordedBlob()}`)
+    formData.append('fSize', file.size.toString()??'No size available')
     const values = formData.values.toString()
     window.alert(`
       fileName => ${file.name}
