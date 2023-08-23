@@ -1,6 +1,6 @@
 import { getSupportedMimeTypes } from './canvas'
 
-let mediaRecorder : MediaRecorder, recordedBlobs : Blob[] | BlobPart[];
+let mediaRecorder : MediaRecorder, recordedBlobs : Blob[];
 
 export const startRecorder = () => {
     recordedBlobs = [];

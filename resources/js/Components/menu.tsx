@@ -96,6 +96,33 @@ const Dialog = React.forwardRef((props, ref) => {
   const [ title, settitle ] = useState('')
   const [isError, setError] = useState(false)
 
+  const handlePostRecording2 = async(
+    // e: FormEvent<HTMLFormElement>
+    ) => {
+    // e.preventDefault()
+    if(title == ''){
+      setError(true)
+      return
+    }
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
+
+    recordedBlobs.forEach(async(blob, index) => {
+      const arrayBuffer = await blob.arrayBuffer();
+      const arrayBufferView = new Uint8Array(arrayBuffer);
+      const file = new Blob([arrayBufferView], { type: 'video/mp4' });
+      console.log("appending blob")
+      formData.append(`video_${index}`, file, `motionlayer_${index}.mp4`);
+    });
+    
+  //   var file = new Blob(arrayBufferViews, {
+  //     type: 'video/mp4'
+  // });
+    
+  //   formData.append('video', file)
+    router.post('/video', formData)
+  }
   const handlePostRecording = async(
     // e: FormEvent<HTMLFormElement>
     ) => {
@@ -107,15 +134,10 @@ const Dialog = React.forwardRef((props, ref) => {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
-  //   var blob = new Blob(recordedBlobs, {
-  //     type: 'video/mp4'
-  // });
-    // const file = new File(recordedBlobs, title + '.mp4')
     const arrayBufferViews = await processBlobs(recordedBlobs);
     var file = new Blob(arrayBufferViews, {
       type: 'video/mp4'
   });
-    
     formData.append('video', file)
     router.post('/video', formData)
   }
@@ -125,7 +147,7 @@ const Dialog = React.forwardRef((props, ref) => {
     for (const blob of blobArray) {
       const arrayBuffer = await blob.arrayBuffer(); // Convert Blob to ArrayBuffer
       const arrayBufferView = new Uint8Array(arrayBuffer);
-      arrayBufferViews.push(arrayBufferView);
+      arrayBufferViews.push(arrayBufferView.buffer);
     }
   
     return arrayBufferViews;

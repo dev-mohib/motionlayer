@@ -28,16 +28,15 @@ class VideoController extends Controller
     public function store(Request $request) {
         $title = $request->title??'video_canvas';
         $file = $request->file('video');
-        // Log::info([
-        //     'blobs' => $request->blobs,
-        //     'fileSize'=>$request->fileSize,
-        //     'videoFile'=> $file
-        // ]);
-        
-        // Log::info([''])
-        // return redirect('/');
+        // Log::info('loading file list');
+        // foreach ($request->allFiles() as $index => $file) {
+        //     // You can access the uploaded file using the $file object
+        //     Log::info(['file_index'=> $index, 'file'=> $file]);
+        //     $path = $file->store('public/uploaded_files'); // Store the file using the storage system
+        // }
+
         $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
-        // return;
+        return redirect('/');
         $videoPath = $file->path();
         $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
         VideoService::generateThumbnail($videoPath, $outputPath);
