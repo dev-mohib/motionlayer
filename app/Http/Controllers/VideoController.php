@@ -36,24 +36,16 @@ class VideoController extends Controller
         
         // Log::info([''])
         // return redirect('/');
-        // $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
-        // $videoPath = $file->path();
-        foreach ($request->allFiles() as $index => $file) {
-            // You can access the uploaded file using the $file object
-
-            // $filename = $file->getClientOriginalName(); // Get the original filename
-            Log::info(['msg'=>'Getting File chunk','index'=>$index]);
-            $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');// Store the file using the storage system
-
-            // You can perform additional actions with the uploaded file, like saving to a database
-        }
-        // $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
-        // VideoService::generateThumbnail($videoPath, $outputPath);
-        // $post = VideoPost::create([
-        //     'title' => $title,
-        //     'source' => $request->fileName.'.mp4',
-        //     'thumbnail'=>$request->fileName.'.jpg'
-        // ]);
+        $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
+        // return;
+        $videoPath = $file->path();
+        $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
+        VideoService::generateThumbnail($videoPath, $outputPath);
+        $post = VideoPost::create([
+            'title' => $title,
+            'source' => $request->fileName.'.mp4',
+            'thumbnail'=>$request->fileName.'.jpg'
+        ]);
         return redirect('/');
     }
 

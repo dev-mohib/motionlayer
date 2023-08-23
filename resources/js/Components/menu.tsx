@@ -96,7 +96,7 @@ const Dialog = React.forwardRef((props, ref) => {
   const [ title, settitle ] = useState('')
   const [isError, setError] = useState(false)
 
-  const handlePostRecording = (
+  const handlePostRecording = async(
     // e: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
@@ -111,26 +111,26 @@ const Dialog = React.forwardRef((props, ref) => {
   //     type: 'video/mp4'
   // });
     // const file = new File(recordedBlobs, title + '.mp4')
-
-    const files = recordedBlobs.map((blob, index) => {
-      const file = new Blob([blob], { type: 'video/mp4' }); // Modify the type as needed
-      // file.name = `${title}_${index}.mp4`; // Set the desired filename
-      return file;
-    });
+    const arrayBufferViews = await processBlobs(recordedBlobs);
+    var file = new Blob(arrayBufferViews, {
+      type: 'video/mp4'
+  });
     
-    files.forEach((file, index) => {
-      formData.append(`video_${index}`, file);
-    });
-    // formData.append('video', file)
-    // formData.append('fileSize', file.size.toString()??'No size available')
-    
-    // alert(`
-    //   fileName => ${file.name}
-    //   fileSize => ${file.size}, 
-    //   `)
+    formData.append('video', file)
     router.post('/video', formData)
   }
-
+  async function processBlobs(blobArray : Blob[] | any) {
+    const arrayBufferViews = [];
+  
+    for (const blob of blobArray) {
+      const arrayBuffer = await blob.arrayBuffer(); // Convert Blob to ArrayBuffer
+      const arrayBufferView = new Uint8Array(arrayBuffer);
+      arrayBufferViews.push(arrayBufferView);
+    }
+  
+    return arrayBufferViews;
+  }
+  
   return (
     <dialog
       className=' bg-gray-800 rounded-lg shadow-xl'
