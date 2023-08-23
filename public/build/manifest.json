@@ -1,12 +1,12 @@
 {
-  "_hooks-fe8c1100.js": {
-    "file": "assets/hooks-fe8c1100.js",
+  "_hooks-b4f3e51d.js": {
+    "file": "assets/hooks-b4f3e51d.js",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
   "resources/js/Pages/Clean/index.tsx": {
-    "file": "assets/index-2f0e7009.js",
+    "file": "assets/index-bd935c08.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -14,16 +14,16 @@
     "src": "resources/js/Pages/Clean/index.tsx"
   },
   "resources/js/Pages/Editor/fabric/index.tsx": {
-    "file": "assets/index-85ba6c89.js",
+    "file": "assets/index-80dd8148.js",
     "imports": [
       "resources/js/app.tsx",
-      "_hooks-fe8c1100.js"
+      "_hooks-b4f3e51d.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Editor/fabric/index.tsx"
   },
   "resources/js/Pages/Editor/helpers/drawing_screen.tsx": {
-    "file": "assets/drawing_screen-ef3f2583.js",
+    "file": "assets/drawing_screen-2e8151ce.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -31,26 +31,26 @@
     "src": "resources/js/Pages/Editor/helpers/drawing_screen.tsx"
   },
   "resources/js/Pages/Editor/index.tsx": {
-    "file": "assets/index-55fcd067.js",
+    "file": "assets/index-b7b3c946.js",
     "imports": [
       "resources/js/app.tsx",
-      "_hooks-fe8c1100.js",
+      "_hooks-b4f3e51d.js",
       "resources/js/Pages/Editor/upload_view.tsx"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Editor/index.tsx"
   },
   "resources/js/Pages/Editor/upload_view.tsx": {
-    "file": "assets/upload_view-44a109ee.js",
+    "file": "assets/upload_view-5eb9b0ea.js",
     "imports": [
       "resources/js/app.tsx",
-      "_hooks-fe8c1100.js"
+      "_hooks-b4f3e51d.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Editor/upload_view.tsx"
   },
   "resources/js/Pages/Home/index.tsx": {
-    "file": "assets/index-d4e44411.js",
+    "file": "assets/index-482c77eb.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -58,7 +58,7 @@
     "src": "resources/js/Pages/Home/index.tsx"
   },
   "resources/js/Pages/Welcome.tsx": {
-    "file": "assets/Welcome-7fe93453.js",
+    "file": "assets/Welcome-938ad4d7.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -82,7 +82,7 @@
       "resources/js/Pages/Home/index.tsx",
       "resources/js/Pages/Welcome.tsx"
     ],
-    "file": "assets/app-fda9cc0f.js",
+    "file": "assets/app-41c59331.js",
     "isEntry": true,
     "src": "resources/js/app.tsx"
   }

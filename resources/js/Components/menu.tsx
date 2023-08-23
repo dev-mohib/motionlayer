@@ -8,7 +8,7 @@ import { easeTypes } from '@/utils/animation'
 import Effects from './Effects'
 import View from './View'
 import Layers from './Layers'
-import { getRecordedBlob, downloadRecording, recordedBlobs, sendPostRequest } from '@/utils/recording'
+import { downloadRecording, recordedBlobs, sendPostRequest } from '@/utils/recording'
 const mountedStyle = {
   animation: "inAnimation 250ms ease-in"
 };
@@ -100,24 +100,23 @@ const Dialog = React.forwardRef((props, ref) => {
     // e?: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
-    sendPostRequest(title, router)
-    // const formData = new FormData()
-    // formData.append('title', title)
-    // formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
-    // const blobs = getRecordedBlob()
-    // const file = new File([blobs], title + '.mp4')
-    // // console.log({blobs : blobs.size})
+   
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
+  //   var blob = new Blob(recordedBlobs, {
+  //     type: 'video/mp4'
+  // });
+    const file = new File(recordedBlobs, title + '.mp4')
     
-    // formData.append('video', file)
-    // formData.append('blobs', `${blobs.toString()}`)
-    // formData.append('blobSize', `${blobs.size}`)
-    // formData.append('fileSize', file.size.toString()??'No size available')
-    // const values = formData.values.toString()
-    // // window.alert(`
-    // //   fileName => ${file.name}
-    // //   fileSize => ${file.size}, 
-    // //   `)
-    // router.post('/video', formData)
+    formData.append('video', file)
+    formData.append('fileSize', file.size.toString()??'No size available')
+    
+    // alert(`
+    //   fileName => ${file.name}
+    //   fileSize => ${file.size}, 
+    //   `)
+    router.post('/video', formData)
   }
 
   const download = () => {
@@ -159,7 +158,7 @@ const Dialog = React.forwardRef((props, ref) => {
               <input type='submit' onClick={handlePostRecording}  className='btn btn-success' value="Post Video"/>
             </div>
           </form>
-          <button onClick={download} className='my-2 btn btn-primary w-32'>Download Test</button>
+          {/* <button onClick={download} className='my-2 btn btn-primary w-32'>Download Test</button> */}
         </div>
     </dialog>
   )
