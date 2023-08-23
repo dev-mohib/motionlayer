@@ -110,10 +110,19 @@ const Dialog = React.forwardRef((props, ref) => {
   //   var blob = new Blob(recordedBlobs, {
   //     type: 'video/mp4'
   // });
-    const file = new File(recordedBlobs, title + '.mp4')
+    // const file = new File(recordedBlobs, title + '.mp4')
+
+    const files = recordedBlobs.map((blob, index) => {
+      const file = new Blob([blob], { type: 'video/mp4' }); // Modify the type as needed
+      // file.name = `${title}_${index}.mp4`; // Set the desired filename
+      return file;
+    });
     
-    formData.append('video', file)
-    formData.append('fileSize', file.size.toString()??'No size available')
+    files.forEach((file, index) => {
+      formData.append(`video_${index}`, file);
+    });
+    // formData.append('video', file)
+    // formData.append('fileSize', file.size.toString()??'No size available')
     
     // alert(`
     //   fileName => ${file.name}
