@@ -94,13 +94,16 @@ return (
 
 const Dialog = React.forwardRef((props, ref) => {
   const [ title, settitle ] = useState('')
-  const [dUrl, setUrl] = useState('#') 
+  const [isError, setError] = useState(false)
 
   const handlePostRecording = (
-    // e?: FormEvent<HTMLFormElement>
+    // e: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
-   
+    if(title == ''){
+      setError(true)
+      return
+    }
     const formData = new FormData()
     formData.append('title', title)
     formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
@@ -119,18 +122,6 @@ const Dialog = React.forwardRef((props, ref) => {
     router.post('/video', formData)
   }
 
-  const download = () => {
-    var blob = new Blob(recordedBlobs, {
-      type: 'video/mp4'
-  });
-    var fileUrl = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = 'motionlayer.mp4'; // Change this to the desired filename
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
   return (
     <dialog
       className=' bg-gray-800 rounded-lg shadow-xl'
@@ -145,20 +136,21 @@ const Dialog = React.forwardRef((props, ref) => {
         }}>X</span>
         </div>
         <div className='flex flex-col my-16 ml-8'>
-          <form>
+          {/* <form onSubmit={handlePostRecording}> */}
             <h1 className='font-normal text-white text-xl my-3'>Video recorded successfully. Select the action</h1>
             <div className="mb-4 w-1/2">
-              {/* <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-                Title
-              </label> */}
-              <input value={title} onChange={e => settitle(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Enter Video Title(Optional)" required/>
+              <input value={title} onChange={e => {
+                settitle(e.target.value)
+                if(isError)
+                setError(false)
+              }} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Enter Video Title(Optional)" required/>
+              {isError && <h1 className='text-red-400 m-0.5'>title is required</h1>}
             </div>
             <div className='self-end px-10 mt-16 flex'>
               <button className='btn btn-primary  mx-10' onClick={() => downloadRecording(title)}>Download</button>
               <input type='submit' onClick={handlePostRecording}  className='btn btn-success' value="Post Video"/>
             </div>
-          </form>
-          {/* <button onClick={download} className='my-2 btn btn-primary w-32'>Download Test</button> */}
+          {/* </form> */}
         </div>
     </dialog>
   )
