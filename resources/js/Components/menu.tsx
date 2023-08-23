@@ -48,10 +48,7 @@ return (
   <div className='fixed top-0 left-0 right-0 z-50'>
   <Dialog ref={dialogRef}/>
   <div className='w-full bg-gray-800 h-12 flex flex-row justify-between items-center p-0'>
-    <img src='/logo_3.png' className="h-16 -mb-1" onClick={() => {
-      // @ts-ignore
-      dialogRef.current.showModal()
-    }}/>
+    <img src='/logo_3.png' className="h-16 -mb-1"/>
     <div className='flex flex-row text-white z-50'>
       <div className="relative inline-block text-left mx-2">
         <div className='flex flex-row text-white'>
@@ -97,6 +94,7 @@ return (
 
 const Dialog = React.forwardRef((props, ref) => {
   const [ title, settitle ] = useState('')
+  const [dUrl, setUrl] = useState('#') 
 
   const handlePostRecording = (
     // e?: FormEvent<HTMLFormElement>
@@ -122,6 +120,18 @@ const Dialog = React.forwardRef((props, ref) => {
     // router.post('/video', formData)
   }
 
+  const download = () => {
+    var blob = new Blob(recordedBlobs, {
+      type: 'video/mp4'
+  });
+    var fileUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = 'motionlayer.mp4'; // Change this to the desired filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
   return (
     <dialog
       className=' bg-gray-800 rounded-lg shadow-xl'
@@ -149,6 +159,7 @@ const Dialog = React.forwardRef((props, ref) => {
               <input type='submit' onClick={handlePostRecording}  className='btn btn-success' value="Post Video"/>
             </div>
           </form>
+          <button onClick={download} className='my-2 btn btn-primary w-32'>Download Test</button>
         </div>
     </dialog>
   )
