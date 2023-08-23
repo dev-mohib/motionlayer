@@ -1,0 +1,1 @@
+import{j as r}from"./app-6d54116c.js";import{u as t}from"./hooks-d9ca8d65.js";const i=()=>{const{layers:s}=t(e=>e.editorReducer);return r.jsx("div",{children:s.map(e=>r.jsx("img",{src:e.url,alt:e.name},e.index))})};export{i as default};
