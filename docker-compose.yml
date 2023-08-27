@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      # MYSQL_DATABASE: thinkact_motionlayer
+      MYSQL_USER: thinkact_motionlayer
+      MYSQL_PASSWORD: Login(8125)
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    networks:
+      - motionlayer
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: thinkact_motionlayer
+      PMA_PASSWORD: Login(8125)
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - motionlayer
+
+networks:
+  motionlayer:
+    driver: bridge
