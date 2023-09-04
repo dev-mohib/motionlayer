@@ -127,18 +127,19 @@ const Dialog = React.forwardRef((props, ref) => {
     // e: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
-    if(title == ''){
-      setError(true)
-      return
-    }
+    // if(title == ''){
+    //   setError(true)
+    //   return
+    // }
     const formData = new FormData()
     formData.append('title', title)
     formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
     const arrayBufferViews = await processBlobs(recordedBlobs);
-    var file = new Blob(arrayBufferViews, {
-      type: 'video/mp4'
-  });
+    var file = new Blob(arrayBufferViews, 
+      {type: 'video/mp4'}
+  );
     formData.append('video', file)
+    // alert(file.size)
     router.post('/video', formData)
   }
   async function processBlobs(blobArray : Blob[] | any) {

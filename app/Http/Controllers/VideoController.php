@@ -28,6 +28,8 @@ class VideoController extends Controller
     public function store(Request $request) {
         $title = $request->title??'video_canvas';
         $file = $request->file('video');
+        Log::info(['file' => $file]);
+        Log::info(['error' => $file->getErrorMessage()]);
         // Log::info('loading file list');
         // foreach ($request->allFiles() as $index => $file) {
         //     // You can access the uploaded file using the $file object
@@ -36,15 +38,15 @@ class VideoController extends Controller
         // }
 
         $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
-        $videoPath = $file->path();
-        $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
-        VideoService::generateThumbnail($videoPath, $outputPath);
-        Log::info(['videoPath' =>  $videoPath, 'outputPath' => $outputPath]);
-        $post = VideoPost::create([
-            'title' => $title,
-            'source' => $request->fileName.'.mp4',
-            'thumbnail'=>$request->fileName.'.jpg'
-        ]);
+        // $videoPath = $file->path();
+        // $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
+        // VideoService::generateThumbnail($videoPath, $outputPath);
+        // Log::info(['videoPath' =>  $videoPath, 'outputPath' => $outputPath]);
+        // $post = VideoPost::create([
+        //     'title' => $title,
+        //     'source' => $request->fileName.'.mp4',
+        //     'thumbnail'=>$request->fileName.'.jpg'
+        // ]);
         // return redirect('/');
     }
 

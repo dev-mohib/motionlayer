@@ -18,7 +18,7 @@ import { LayerType,AnimationType,Shadow,EditorState, Skew } from "@/types/index.
     easeType : 'easeInOutQuad',
     animationDelta : 30,
     animationDuration : 1500, //ms
-    videoLength : 5,
+    videoLength : 5, // default 5 seconds
     isFullScreen : false,
     shadow : {
       enabled : false,
