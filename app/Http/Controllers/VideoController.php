@@ -36,16 +36,16 @@ class VideoController extends Controller
         // }
 
         $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
-        return redirect('/');
         $videoPath = $file->path();
         $outputPath = storage_path('app/public/thumbnails/') .$request->fileName.'.jpg';
         VideoService::generateThumbnail($videoPath, $outputPath);
+        Log::info(['videoPath' =>  $videoPath, 'outputPath' => $outputPath]);
         $post = VideoPost::create([
             'title' => $title,
             'source' => $request->fileName.'.mp4',
             'thumbnail'=>$request->fileName.'.jpg'
         ]);
-        return redirect('/');
+        // return redirect('/');
     }
 
     public function destroy() {}
