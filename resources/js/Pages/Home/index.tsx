@@ -30,6 +30,7 @@ const customStyles = {
 const Index = () => {
     const { videos } = usePage<PageProps<{videos : GalleryVideoPagination}>>().props
     const [selectedVideo, setSelectedVideo] = useState<null | GalleryVideo>(null)
+    const [isLoading, setLoading] = useState(true)
     const aRef = useRef(null)
 
     const handleDownload = () =>{ 
@@ -72,7 +73,10 @@ const Index = () => {
              <video className='' autoPlay loop style={{
                 width: '90vw',
                 height: '80vh'
-             }}>
+             }}
+            //  onLoadStart={}
+                poster="/loading.gif" preload="auto"
+             >
                 <source src={`/storage/`+selectedVideo.source} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>

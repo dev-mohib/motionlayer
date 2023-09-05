@@ -17,8 +17,8 @@ class Kernel extends ConsoleKernel
             // Delete VideoPosts older than 1 year
             $videos = VideoPost::where('created_at', '<', now()->subYear())->get();
             foreach($videos as $video){
-                Storage::delete('public/videos'.$video->source);
-                Storage::delete('public/thumbnails'.$video->thumbnails);
+                Storage::delete('public/'.$video->source);
+                Storage::delete('public/'.$video->thumbnails);
                 $video->delete();
             }
         })->weeklyOn(0, '0'); // 0 represents Sunday, and '0' represents midnight (12:00 AM)
