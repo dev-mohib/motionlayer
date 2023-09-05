@@ -30,14 +30,14 @@ class VideoController extends Controller
         $screenshot = $request->file('screenshot');
 
         if($screenshot){
-            $screenshot->storeAs(path: 'public/thumbnails/'.$request->fileName.'.jpeg');
+            $screenshot->storeAs(path: 'public/image-'.$request->fileName.'.jpeg');
         }
-        $file->storeAs(path: 'public/videos/'.$request->fileName.'.mp4');
+        $file->storeAs(path: 'public/video-'.$request->fileName.'.mp4');
       
         $post = VideoPost::create([
             'title' => $title,
-            'source' => $request->fileName.'.mp4',
-            'thumbnail'=>$request->fileName.'.jpeg'
+            'source' => 'video-'.$request->fileName.'.mp4',
+            'thumbnail'=>'image-'.$request->fileName.'.jpeg'
         ]);
         return redirect('/');
     }
@@ -46,8 +46,8 @@ class VideoController extends Controller
         $video = VideoPost::find($id);
         Log::info($video);
         if($video){
-            Storage::delete('public/videos'.$video->source);
-            Storage::delete('public/thumbnails'.$video->thumbnail);
+            Storage::delete('public/'.$video->source);
+            Storage::delete('public/'.$video->thumbnail);
             $video->delete();
         }
         return redirect('/');
@@ -55,8 +55,8 @@ class VideoController extends Controller
     public function clean(){
         $videos = VideoPost::where('created_at', '<', now()->subYear())->get();
         foreach($videos as $video){
-            Storage::delete('public/videos'.$video->source);
-            Storage::delete('public/thumbnails'.$video->thumbnail);
+            Storage::delete('public/'.$video->source);
+            Storage::delete('public/'.$video->thumbnail);
             $video->delete();
         }
         return Inertia::render('Clean/index');

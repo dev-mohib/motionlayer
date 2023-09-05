@@ -73,7 +73,7 @@ const Index = () => {
                 width: '90vw',
                 height: '80vh'
              }}>
-                <source src={`/storage/videos/`+selectedVideo.source} type="video/mp4" />
+                <source src={`/storage/`+selectedVideo.source} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
             <h1 className='my-3 font-bold text-2xl'>{selectedVideo.title}</h1>
@@ -106,10 +106,10 @@ const Card = ({video, onClick}:{video : GalleryVideo, onClick : any}) => {
         <div
             className=' shadow-lg rounded border-4 border-gray-700'
          >
-            <a ref={aRef}  href={'/storage/videos/'+ video.source}  hidden download={video.source}></a>
+            <a ref={aRef}  href={'/storage/'+ video.source}  hidden download={video.source}></a>
             <div className='w-full rounded hover:bg-gray-600 cursor-pointer hover:shadow-lg'>
                 <div onClick={onClick}  className={`w-full ${getColor()}`}>
-                    <img className='object-cover w-full' src={`/storage/thumbnails/`+video.thumbnail}/>
+                    <img className='object-cover w-full' src={`/storage/`+video.thumbnail}/>
                 </div>
                 <div className='flex justify-between'>
                     <div className=' mt-3'>

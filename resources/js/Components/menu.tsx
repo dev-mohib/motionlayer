@@ -112,7 +112,7 @@ const Dialog = React.forwardRef((props, ref) => {
     setUploading(true)
     const formData = new FormData()
     formData.append('title', title)
-    formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
+    formData.append('fileName', `${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
 
     if(ssBlob)
     formData.append('screenshot', ssBlob)
