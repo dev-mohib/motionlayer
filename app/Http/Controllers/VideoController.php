@@ -28,13 +28,6 @@ class VideoController extends Controller
         $title = $request->title??'video_canvas';
         $file = $request->file('video');
         $screenshot = $request->file('screenshot');
-        Log::info(['file' => $file]);
-        Log::info(['error' => $file->getErrorMessage()]);
-        // foreach ($request->allFiles() as $index => $file) {
-        //     // You can access the uploaded file using the $file object
-        //     Log::info(['file_index'=> $index, 'file'=> $file]);
-        //     $path = $file->store('public/uploaded_files'); // Store the file using the storage system
-        // }
 
         if($screenshot){
             $screenshot->storeAs(path: 'public/thumbnails/'.$request->fileName.'.jpeg');

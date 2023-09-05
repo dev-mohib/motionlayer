@@ -123,7 +123,7 @@ const Card = ({video, onClick}:{video : GalleryVideo, onClick : any}) => {
                     <div className='flex p-4'>
                         <DownloadIcon className='text-green-500 mx-1 hover:text-green-400' onClick={handleDownload}/>
                         {
-                            // auth.user &&
+                            auth.user &&
                             <div className='mx-1' onClick={handleVideoDelete}><DeleteIcon className='text-red-500 hover:text-red-400' /></div>
                         }
                     </div>

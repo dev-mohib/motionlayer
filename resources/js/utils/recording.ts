@@ -21,8 +21,7 @@ try {
     mediaRecorder.start();
     mainCanvas.toBlob(blob => {
         ssBlob = blob
-    },  "image/jpeg",0.90,)
-
+    },  "image/jpeg",0.65,)
     return true
 }
 

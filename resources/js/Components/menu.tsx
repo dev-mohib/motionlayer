@@ -1,5 +1,5 @@
 import React, { FormEvent, FormEventHandler, createRef, useEffect, useRef, useState } from 'react'
-import { useForm, router } from '@inertiajs/react'
+import { useForm, router, Link } from '@inertiajs/react'
 import {  EyeIcon, EffectIcon, RotateClockIcon, RotateAnticlockIcon, 
   VerticalArrowIcon, HorizontalArrowIcon, PlayIcon, Pause, LayerIcon} from './icons'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
@@ -48,7 +48,9 @@ return (
   <div className='fixed top-0 left-0 right-0 z-50'>
   <Dialog ref={dialogRef}/>
   <div className='w-full bg-gray-800 h-12 flex flex-row justify-between items-center p-0'>
-    <img src='/logo_3.png' className="h-16 -mb-1"/>
+    <a href="/">
+      <img src='/logo_3.png' className="h-16 -mb-1"/>
+    </a>
     <div className='flex flex-row text-white z-50'>
       <div className="relative inline-block text-left mx-2">
         <div className='flex flex-row text-white'>
@@ -95,43 +97,19 @@ return (
 const Dialog = React.forwardRef((props, ref) => {
   const [ title, settitle ] = useState('')
   const [isError, setError] = useState(false)
-
-  const handlePostRecording2 = async(
-    // e: FormEvent<HTMLFormElement>
-    ) => {
-    // e.preventDefault()
-    if(title == ''){
-      setError(true)
-      return
-    }
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
-
-    recordedBlobs.forEach(async(blob, index) => {
-      const arrayBuffer = await blob.arrayBuffer();
-      const arrayBufferView = new Uint8Array(arrayBuffer);
-      const file = new Blob([arrayBufferView], { type: 'video/mp4' });
-      console.log("appending blob")
-      formData.append(`video_${index}`, file, `motionlayer_${index}.mp4`);
-    });
-    
-  //   var file = new Blob(arrayBufferViews, {
-  //     type: 'video/mp4'
-  // });
-    
-  //   formData.append('video', file)
-    router.post('/video', formData)
-  }
+  const [isUploading, setUploading] = useState(false)
   const handlePostRecording = async(
     // e: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
+    if(isUploading){
+      return
+    }
     if(title == ''){
       setError(true)
       return
     }
-    
+    setUploading(true)
     const formData = new FormData()
     formData.append('title', title)
     formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
@@ -147,6 +125,7 @@ const Dialog = React.forwardRef((props, ref) => {
     formData.append('video', file)
 
     router.post('/video', formData)
+  
   }
   async function processBlobs(blobArray : Blob[] | any) {
     const arrayBufferViews = [];
@@ -186,7 +165,14 @@ const Dialog = React.forwardRef((props, ref) => {
             </div>
             <div className='self-end px-10 mt-16 flex'>
               <button className='btn btn-primary  mx-10' onClick={() => downloadRecording(title)}>Download</button>
+              {
+                isUploading ? 
+                <div className='btn bg-gray-400 cursor-not-allowed '>
+                  <div className='custom-loader'/>
+                </div>
+                :
               <input type='submit' onClick={handlePostRecording}  className='btn btn-success' value="Post Video"/>
+              }
             </div>
           {/* </form> */}
         </div>
