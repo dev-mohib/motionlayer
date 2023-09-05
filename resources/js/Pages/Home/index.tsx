@@ -1,6 +1,7 @@
 import { GalleryVideo, GalleryVideoPagination, PageProps } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage, router } from '@inertiajs/react';
 import React, { RefObject, useRef, useState } from 'react'
+import {  DownloadIcon, DeleteIcon } from '@/Components/icons'
 import Modal from 'react-modal'
 const getColor = () => {
     const colors = [
@@ -89,23 +90,43 @@ const Index = () => {
 
 
 const Card = ({video, onClick}:{video : GalleryVideo, onClick : any}) => {
+    const { auth } = usePage<PageProps>().props
+    const aRef = useRef<HTMLAnchorElement>(null)
+    const { delete  : destroy } = useForm()
+    const handleVideoDelete = () => {
+        const confirm = window.confirm("Do you really want to delete this video?")
+        if(confirm){
+            router.delete('/video/'+video.id)
+        }
+    }
+    const handleDownload = () => {
+        aRef.current?.click()
+    }
     return (
         <div
             className=' shadow-lg rounded border-4 border-gray-700'
          >
+            <a ref={aRef}  href={'/storage/videos/'+ video.source}  hidden download={video.source}></a>
             <div className='w-full rounded hover:bg-gray-600 cursor-pointer hover:shadow-lg'>
                 <div onClick={onClick}  className={`w-full ${getColor()}`}>
                     <img className='object-cover w-full' src={`/storage/thumbnails/`+video.thumbnail}/>
                 </div>
                 <div className='flex justify-between'>
-                    <div className='h-20 mt-3 bg-gray-500 pt-4 px-2'>
+                    <div className=' mt-3'>
                         <h1 className='text-white font-bold'>{video.title}</h1>
                     </div>
-                    <label htmlFor="dropdown" className="block text-gray-700 font-semibold mb-2">:</label>
-                    <select id="dropdown" className="block  p-0.5 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
+                    {/* <label htmlFor="dropdown" className="block text-gray-700 font-semibold mb-2">:</label> */}
+                    {/* <select id="dropdown" className="block  p-0.5 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
                         <option value="option1">Download</option>
                         <option value="option2">Delete</option>
-                    </select>
+                    </select> */}
+                    <div className='flex p-4'>
+                        <DownloadIcon className='text-green-500 mx-1 hover:text-green-400' onClick={handleDownload}/>
+                        {
+                            // auth.user &&
+                            <div className='mx-1' onClick={handleVideoDelete}><DeleteIcon className='text-red-500 hover:text-red-400' /></div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,11 +1,15 @@
 import { getSupportedMimeTypes } from './canvas'
 
 let mediaRecorder : MediaRecorder, recordedBlobs : Blob[];
+var ssBlob : Blob | null = null
 
 export const startRecorder = () => {
     recordedBlobs = [];
-    var mainCanvas : any = document.querySelector("#myCanvas");
-    var stream = mainCanvas.captureStream(30)
+    var mainCanvas : HTMLCanvasElement | null = document.querySelector("#myCanvas");
+    if(!mainCanvas){
+        return
+    }
+    var stream = mainCanvas.captureStream()
     var options = {mimeType: getSupportedMimeTypes()[0]};
 try {
     mediaRecorder = new MediaRecorder(stream, options);
@@ -13,11 +17,15 @@ try {
     console.error('Exception while creating MediaRecorder:', e);
     return false;
 }
-
     mediaRecorder.ondataavailable = handleDataAvailable;
     mediaRecorder.start();
+    mainCanvas.toBlob(blob => {
+        ssBlob = blob
+    },  "image/jpeg",0.90,)
+
     return true
 }
+
 
 export const stopRecorder = () => {
     try {
@@ -171,5 +179,5 @@ class MyMediaRecorder{
 
 }
 
-export { recordedBlobs }
+export { recordedBlobs, ssBlob }
 // export const myMediaRecorder = new MyMediaRecorder()

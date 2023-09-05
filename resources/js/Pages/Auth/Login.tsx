@@ -1,13 +1,14 @@
+// @ts-nocheck
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
+import Checkbox from '@/Components/css/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/css/InputError';
+import InputLabel from '@/Components/css/InputLabel';
+import PrimaryButton from '@/Components/css/PrimaryButton';
+import TextInput from '@/Components/css/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status, canResetPassword } : any) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -27,14 +28,14 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Email" children={undefined} />
 
                     <TextInput
                         id="email"
@@ -51,7 +52,8 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    
+                    <InputLabel htmlFor="password" value="Password" children={undefined} />
 
                     <TextInput
                         id="password"
@@ -92,6 +94,6 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
-        </GuestLayout>
+        </>
     );
 }

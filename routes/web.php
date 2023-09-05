@@ -13,7 +13,9 @@ Route::get('/video', [VideoController::class, 'index'])->name('video.index');
 Route::get('/video/{id}', [VideoController::class, 'show'])->name('video.show');
 Route::post('/video', [VideoController::class, 'store'])->name('video.store');
 Route::delete('/video/{id}', [VideoController::class, 'destroy'])->name('video.destroy');
-
+Route::get('/signin', function(){
+    return Inertia::render('Signin/index');
+});
 
 Route::get('/editor', function () {
     return Inertia::render('Editor/index');

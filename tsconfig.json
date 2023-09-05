@@ -14,5 +14,5 @@
           "@/*": ["./resources/js/*"]
       }
   },
-  "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts", "react-icons.d"]
+  "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts", "react-icons.d", "resources/js/Pages/Auth/Login.ts"]
 }

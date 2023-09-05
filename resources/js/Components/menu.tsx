@@ -8,7 +8,7 @@ import { easeTypes } from '@/utils/animation'
 import Effects from './Effects'
 import View from './View'
 import Layers from './Layers'
-import { downloadRecording, recordedBlobs, sendPostRequest } from '@/utils/recording'
+import { downloadRecording, recordedBlobs, sendPostRequest, ssBlob } from '@/utils/recording'
 const mountedStyle = {
   animation: "inAnimation 250ms ease-in"
 };
@@ -127,19 +127,25 @@ const Dialog = React.forwardRef((props, ref) => {
     // e: FormEvent<HTMLFormElement>
     ) => {
     // e.preventDefault()
-    // if(title == ''){
-    //   setError(true)
-    //   return
-    // }
+    if(title == ''){
+      setError(true)
+      return
+    }
+    
     const formData = new FormData()
     formData.append('title', title)
     formData.append('fileName', `video-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`)
+
+    if(ssBlob)
+    formData.append('screenshot', ssBlob)
+
     const arrayBufferViews = await processBlobs(recordedBlobs);
     var file = new Blob(arrayBufferViews, 
       {type: 'video/mp4'}
   );
+
     formData.append('video', file)
-    // alert(file.size)
+
     router.post('/video', formData)
   }
   async function processBlobs(blobArray : Blob[] | any) {

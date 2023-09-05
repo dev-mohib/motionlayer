@@ -1,12 +1,18 @@
 
 
 function getSupportedMimeTypes() {
+    // const possibleTypes = [
+    //   'video/webm;codecs=vp9,opus',
+    //   'video/webm;codecs=vp8,opus',
+    //   'video/webm;codecs=h264,opus',
+    //   'video/mp4;codecs=h264,aac',
+    // ];
     const possibleTypes = [
-      'video/webm;codecs=vp9,opus',
-      'video/webm;codecs=vp8,opus',
-      'video/webm;codecs=h264,opus',
-      'video/mp4;codecs=h264,aac',
-    ];
+      "video/mp4",
+      "video/quicktime",
+      "video/3gpp",
+      "video/h264"
+    ]
     return possibleTypes.filter(mimeType => {
       return MediaRecorder.isTypeSupported(mimeType);
     });
