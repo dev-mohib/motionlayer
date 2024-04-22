@@ -116,8 +116,8 @@ const Fabric = () => {
         const ih = i.height
         const scale = w < h ? w : h
         i.scale(scale)
-        const setW = iw > cw ? (cw/2 - (iw*scale)/2) : cw/2 - (iw*scale)/2
-        const setH = ih > ch ? (ch/2 - (ih*scale)/2) : ch/2 - (ih*scale)/2
+        // const setW = iw > cw ? (cw/2 - (iw*scale)/2) : cw/2 - (iw*scale)/2
+        // const setH = ih > ch ? (ch/2 - (ih*scale)/2) : ch/2 - (ih*scale)/2
 
         i.set({ 
             left : cw/2, 
@@ -127,7 +127,7 @@ const Fabric = () => {
             originX : "center", 
             originY : "center"
         }).setCoords()
-        i.set({'iw' : setW, 'ih' : setH})
+        // i.set({'iw' : setW, 'ih' : setH})
 
         i.set('layerId', 'layer-'+_i)
         i.set('stretch', false)

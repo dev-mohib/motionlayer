@@ -122,8 +122,8 @@ export const animateCircle = (arr, canvas, easeType = "easeInOutQuad", duration 
           if(!a.isAnimate){return;}
           var x =  (radius + t) * Math.cos(angle);
           var y =  (radius + t) * Math.sin(angle);
-          a.left = x + a.iw + a.l
-          a.top = y + a.ih + a.t
+          a.left = x + a.l
+          a.top = y + a.t
         })
           canvas.renderAll();
       },
