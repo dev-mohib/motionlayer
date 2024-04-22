@@ -1,9 +1,9 @@
 import React, { FormEvent, FormEventHandler, createRef, useEffect, useRef, useState } from 'react'
 import { useForm, router, Link } from '@inertiajs/react'
 import {  EyeIcon, EffectIcon, RotateClockIcon, RotateAnticlockIcon, 
-  VerticalArrowIcon, HorizontalArrowIcon, PlayIcon, Pause, LayerIcon} from './icons'
+  VerticalArrowIcon, HorizontalArrowIcon, PlayIcon, Pause, LayerIcon, RotateIcon, FlipIcon, TransformIcon} from './icons'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
-import { hideMenu,showMenu, enableAnimating, disableAnimating, setAnimationName, enableRecording, setEaseType, setAnimationDuration, setAnimationDelta, setTempLayers, setVideoLength } from '@/state/store'
+import { editorActions } from '@/state/store'
 import { easeTypes } from '@/utils/animation'
 import Effects from './Effects'
 import View from './View'
@@ -25,12 +25,12 @@ const TopMenuBar = () => {
   const { isMenuOpened, openedMenu, isAnimating } = useAppSelector(s => s.editorReducer)
   const handleMenu = (option : string) => {
     if(openedMenu === option && isMenuOpened){
-      dispatch(hideMenu())
+      dispatch(editorActions.hideMenu())
       return
     }else {
-      dispatch(hideMenu())
+      dispatch(editorActions.hideMenu())
       setTimeout(() => {
-        dispatch(showMenu(option))
+        dispatch(editorActions.showMenu(option))
       },300)
     }
   }
@@ -40,7 +40,7 @@ const TopMenuBar = () => {
       setTimeout(() => {
         // @ts-ignore
         dialogRef.current.showModal()
-        dispatch(disableAnimating())
+        dispatch(editorActions.disableAnimating())
       },200)
     }
   },[countDown, isRecording])
@@ -55,7 +55,8 @@ return (
       <div className="relative inline-block text-left mx-2">
         <div className='flex flex-row text-white'>
           <span className='mx-2 cursor-pointer' onClick={()=> handleMenu('view')}>
-            <EyeIcon width={23} height={23} /></span>
+            <EyeIcon width={23} height={23} />
+          </span>
           <span className='mx-2 cursor-pointer' onClick={()=> handleMenu('play')}>
             {isAnimating ? 
             <Pause width={23} height={23} />
@@ -186,8 +187,9 @@ const Play = () => {
   return ( <div className='p-2'>
   <h2 className='font-semibold text-base'>Play</h2>
   <div onClick={() => {
+    dispatch(editorActions.setTransformControls(false))
     if(isEditing)
-    dispatch(isAnimating ? disableAnimating() : enableAnimating())
+    dispatch(isAnimating ? editorActions.disableAnimating() : editorActions.enableAnimating())
     }} className='p-4 rounded bg-gradient-to-l from-teal-700 via-teal-500 to-blue-400 mx-1 px-2 mt-4 h-20 flex-col-center cursor-pointer'>
     {isAnimating ?
       <Pause className='hover:scale-125' width={30} height={30} />
@@ -199,11 +201,11 @@ const Play = () => {
     <div className='flex flex-row justify-start'>
       <div onClick={() => {
         if(animationName == 'RotateClock' || animationName == 'RotateAntiClock')
-        dispatch(setAnimationName('TranslateH'))
+        dispatch(editorActions.setAnimationName('TranslateH'))
       }} className={`flex-row-center w-full mr-1 rounded ${animationName == 'TranslateH' || animationName == 'TranslateV' ? 'bg-teal-700 font-bold px-4 py-1 cursor-pointer' : 'btn'}`}>Linear</div>
       <div onClick={() => {
         if(animationName == 'TranslateH' || animationName == 'TranslateV')
-        dispatch(setAnimationName('RotateClock'))
+        dispatch(editorActions.setAnimationName('RotateClock'))
       }} className={`flex-row-center w-full mr-1 rounded ${animationName == 'RotateClock' || animationName == 'RotateAntiClock' ? 'bg-teal-700 font-bold px-4 py-1 cursor-pointer' : 'btn'}`}>Circle</div>
     </div>
 
@@ -212,22 +214,22 @@ const Play = () => {
       {animationName == 'TranslateH'
       || animationName == 'TranslateV'
       ?<div className='flex-row-center'>
-        <div onClick={() => dispatch(setAnimationName('TranslateV'))} 
+        <div onClick={() => dispatch(editorActions.setAnimationName('TranslateV'))} 
         className={`${animationName == 'TranslateV' ? 'bg-teal-700' : 'bg-teal-800 hover:bg-teal-700'} cursor-pointer py-2 px-3 rounded mr-1`}>
           <VerticalArrowIcon />
         </div>
-        <div onClick={() => dispatch(setAnimationName('TranslateH'))} 
+        <div onClick={() => dispatch(editorActions.setAnimationName('TranslateH'))} 
         className={`${animationName == 'TranslateH' ?  'bg-teal-700' : 'bg-teal-800 hover:bg-teal-700'} cursor-pointer py-2 px-3 rounded ml-1`}>
           <HorizontalArrowIcon />
         </div>
       </div>
       :
       <div className='flex-row-center'>
-        <div onClick={() => dispatch(setAnimationName('RotateAntiClock'))} 
+        <div onClick={() => dispatch(editorActions.setAnimationName('RotateAntiClock'))} 
         className={`${animationName == 'RotateAntiClock' ? 'bg-teal-700' :  'bg-teal-800 hover:bg-teal-700'} cursor-pointer py-2 px-3 rounded mr-1`}>
           <RotateAnticlockIcon />
         </div>
-        <div onClick={() => dispatch(setAnimationName('RotateClock'))} 
+        <div onClick={() => dispatch(editorActions.setAnimationName('RotateClock'))} 
         className={`${animationName == 'RotateClock' ? 'bg-teal-700':'bg-teal-800 hover:bg-teal-700'} cursor-pointer py-2 px-3 rounded mr-1`}>
           <RotateClockIcon />
         </div>
@@ -235,17 +237,17 @@ const Play = () => {
     </div>
 
     <h2 className='font-semibold text-base mt-3 mb-2'>Ease Type</h2>
-    <select onChange={(e) => dispatch(setEaseType(e.target.value))}>
+    <select onChange={(e) => dispatch(editorActions.setEaseType(e.target.value))}>
       {easeTypes.map((ease, index) => <option key={index} value={ease}>{ease}</option>)}
     </select>
     <div>
       <div className='w-full bg-white rounded-full my-1' style={{height : '1px'}} />
       <label htmlFor="speed-range" className="block mt-2 text-sm font-medium text-white dark:text-gray-300 flex-row-between pr-2">Delay <span>{animationDuration} ms</span></label>
-      <input value={animationDuration} onChange={(e) => dispatch(setAnimationDuration(parseInt(e.target.value)))} type="range" step={100} max={2000} min={400} className="w-full h-2 gradient rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
+      <input value={animationDuration} onChange={(e) => dispatch(editorActions.setAnimationDuration(parseInt(e.target.value)))} type="range" step={100} max={2000} min={400} className="w-full h-2 gradient rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
       {/*  Line */}
       <div className='w-full bg-white rounded-full my-1' style={{height : '1px'}} />
       <label htmlFor="radius-range" className="block mt-2 text-sm font-medium text-white dark:text-gray-300 flex-row-between">Change <span>{animationDelta}</span></label>
-      <input value={animationDelta} type="range" onChange={e => dispatch(setAnimationDelta(parseInt(e.target.value)))} step={5} max={100} min={20} className="w-full h-2 gradient rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
+      <input value={animationDelta} type="range" onChange={e => dispatch(editorActions.setAnimationDelta(parseInt(e.target.value)))} step={5} max={100} min={20} className="w-full h-2 gradient rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
       {/* Line */}
       <div className='w-full bg-white rounded-full my-2' style={{height : '1px'}} />
     </div>

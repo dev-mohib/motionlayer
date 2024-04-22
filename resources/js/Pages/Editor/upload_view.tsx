@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useAppDispatch } from '@/state/hooks';
-import { addLayer, enableEditing } from '@/state/store';
-import img_placeholder from '../../assets/image-placeholder.svg'
+import { editorActions } from '@/state/store';
 
 
 const UploadView = () => {
@@ -25,10 +24,10 @@ const UploadView = () => {
         }
         setImages((img:any) => [...img, dataFiles[i]])
         const url = URL.createObjectURL(dataFiles[i])
-        dispatch(addLayer({index : i,name : dataFiles[i].name, url}))
+        dispatch(editorActions.addLayer({index : i,name : dataFiles[i].name, url, hasControls : false, rotation : 0}))
       }
       e.dataTransfer.clearData()
-      dispatch(enableEditing())
+      dispatch(editorActions.enableEditing())
   } 
 
   
@@ -37,9 +36,9 @@ const UploadView = () => {
     {
       for(var i=0; i < e.target.files.length; i++){
         const url = URL.createObjectURL(e.target.files[i])
-        dispatch(addLayer({index : i,name : e.target.files[i].name,url}))
+        dispatch(editorActions.addLayer({index : i,name : e.target.files[i].name,url, hasControls : false, rotation : 0}))
     }
-    dispatch(enableEditing())
+    dispatch(editorActions.enableEditing())
   }
 }
   useEffect(() => {

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../state/hooks'
-import { hideMenu } from '@/state/store'
+import { editorActions } from '@/state/store'
 import TopMenuBar from '@/Components/menu'
 import Fabric from './fabric/canvas'
 import UploadView from './upload_view'
-import { Head, usePage } from '@inertiajs/react'
+import { Head } from '@inertiajs/react'
 
 const Editor = () => {
-  const {message} = usePage().props
-  // console.log({pageMsg : message})
   const dispatch = useAppDispatch()
   const { isRecording, isEditing, layers, bgColor } = useAppSelector(state => state.editorReducer)
 
@@ -18,7 +16,7 @@ const Editor = () => {
     >
       <Head title='Editor'/>
       <TopMenuBar />
-      <div onClick={()  => dispatch(hideMenu())} className='h-screen'>
+      <div onClick={()  => dispatch(editorActions.hideMenu())} className='h-screen'>
         {isEditing ? 
           <Fabric /> 
           :

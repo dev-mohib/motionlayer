@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppSelector } from '../../../state/hooks'
+import { useAppSelector } from '@/state/hooks'
 const Index = () => {
   const { layers } = useAppSelector(s => s.editorReducer)
   return (

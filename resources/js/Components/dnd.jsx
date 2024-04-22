@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import { setExpandedLayerIndex, setUtilLayers, updateUtilLayers } from "@/state/store";
-import { GridIcon } from './icons'
+import { GridIcon, RotateIcon, TransformIcon, FlipIcon } from './icons'
 
 const reOrder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -42,22 +42,24 @@ function Layer({ list, index }) {
                     <GridIcon className='hover:text-gray-600 cursor-grabbing' size={20} />
                 </div>
             </div>
-            <div className="rounded-bl-xl rounded-br-xl shadow-xl transition-all" style={{height : expandedLayerIndex == index ? '160px' : '0px'}}>
+            <div className="rounded-bl-xl rounded-br-xl shadow-xl transition-all" style={{height : expandedLayerIndex == index ? '100px' : '0px'}}>
             {expandedLayerIndex == index &&
               <div className="py-1 px-2">
                 {shadow.enabled&&<div ><label htmlFor="speed-range" className="block mb-0.5 text-sm font-medium text-white dark:text-gray-300 flex-row-between pr-3">Shadow <span>{list.shadow}</span></label>
-                <input value={list.shadow} 
-                    onChange={e => dispatch(updateUtilLayers({index, data : {shadow : parseFloat(e.target.value)}}))} 
-                    className="w-full h-0.5 bg-gradient-to-tl from-gray-700 to-green-600 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" 
-                    step={0.1} min={0} max={1} type="range"  
-                /></div>}
-
-                <div ><label htmlFor="speed-range" className="block mb-0.5 text-sm font-medium text-white dark:text-gray-300 flex-row-between pr-3">Opacity <span>{list.opacity}</span></label>
-                <input value={list.opacity} 
+                  <input value={list.shadow} 
+                      onChange={e => dispatch(updateUtilLayers({index, data : {shadow : parseFloat(e.target.value)}}))} 
+                      className="w-full h-0.5 bg-gradient-to-tl from-gray-700 to-green-600 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" 
+                      step={0.1} min={0} max={1} type="range"  
+                  />
+                </div>}
+                <div>
+                  <label htmlFor="speed-range" className="block mb-0.5 text-sm font-medium text-white dark:text-gray-300 flex-row-between pr-3">Opacity <span>{list.opacity}</span></label>
+                  <input value={list.opacity} 
                     onChange={e => dispatch(updateUtilLayers({index, data : {opacity : parseFloat(e.target.value)}}))} 
                     step={0.1} min={0.1} max={1} type="range"  
                     className="w-full h-0.5 bg-gradient-to-tl from-gray-700 to-green-600 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" 
-                    /></div>
+                  />
+                </div>
 
                 <div className='flex flex-row justify-between mt-2'>
                   <span>Animate</span>
@@ -66,15 +68,14 @@ function Layer({ list, index }) {
                   </label>
                 </div>
 
-                <div className='flex flex-row justify-between mt-2'>
+                {/* <div className='flex flex-row justify-between mt-2'>
                   <span>Stretch</span>
                   <label className="switch-2">
                     <input type="checkbox" checked={list.stretch} onChange={e => dispatch(updateUtilLayers({index, data : {...list, stretch : e.target.checked}}))} />
                   </label>
-                </div>
-
+                </div> */}
               </div>
-             }
+            }
             </div>
         </div>
       )}

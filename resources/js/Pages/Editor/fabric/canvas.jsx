@@ -1,31 +1,33 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { fabric } from 'fabric'
 import { useFabric } from '@/utils/hooks'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
 import { animateLeftRight, animateOpacity, animateTopBottom, animateCircle,getObjectById } from './animations'
-import { setUtilLayers } from '@/state/store'
+import { editorActions, setUtilLayers } from '@/state/store'
 let tempArr = []
 
 const Fabric = () => {
     const { canvas, objects } = useFabric('myCanvas')
-
+    const [isReload, setRelaod] = useState(false)
     const dispatch = useAppDispatch()
-    const { layers, bgColor, isAnimating, animationName, easeType,animationDelta,animationDuration,shadow, skew } = useAppSelector(state => state.editorReducer)
-    const { layers : tmpLayers, isDesktop } = useAppSelector(s => s.utilReducer)
+    const { layers, bgColor, isAnimating, animationName, easeType,animationDelta,animationDuration,shadow, transformControls } = useAppSelector(state => state.editorReducer)
+    const { layers : tmpLayers } = useAppSelector(s => s.utilReducer)
 
     useEffect(() => {
       if(canvas && layers)
       {
         canvas.clear()
         addLayers()
-        }
+        setTimeout(() => {
+          setRelaod(!isReload)
+        },700)
+      }
     },[canvas, layers])
 
     useMemo(() => {
       if(canvas){
         canvas.backgroundColor= bgColor;
-        tmpLayers.map(layer => {
-          // console.log(layer);
+        tmpLayers.map((layer, index) => {
           canvas.forEachObject(obj => {
             if(obj.layerId == layer.id){
               if(layer.stretch){
@@ -35,11 +37,7 @@ const Fabric = () => {
                 obj.scaleY = canvas.height / obj.height
                 obj.set('stretch', true)
               } else {
-                const w = canvas.width /obj.width
-                const  h = canvas.height/obj.height
-                obj.scale(w < h ? w : h)
                 obj.set('stretch', false)
-                canvas.centerObject(obj)
               }
               obj.sendToBack()
 
@@ -55,29 +53,21 @@ const Fabric = () => {
               }else {
                 obj.isAnimate = false
               }
-              // console.log({obj});
+
+              if(transformControls && index == 0){
+                obj.selectable = true
+                obj.hasControls = true
+                canvas.setActiveObject(obj).renderAll();
+              }else {
+                obj.selectable = false
+                obj.hasControls = false
+                canvas.discardActiveObject().renderAll();
+              }
             }
           })
         })  
   }
-},[tmpLayers, bgColor, shadow])
-    useMemo(() => {
-      if(canvas){
-        if(skew.enabled){
-          objects().map(i => {
-            i.skewX = skew.skewX
-            i.skewY = skew.skewY
-          })
-        }else {
-          objects().map(i => {
-            i.skewX = 0
-            i.skewY = 0
-          })
-        }
-        canvas.renderAll()
-      }
-    },[skew])
-
+},[tmpLayers, bgColor, shadow, transformControls, isReload])
     useMemo(() => {
       fabric.runningAnimations.cancelAll()
       if(isAnimating){
@@ -111,11 +101,15 @@ const Fabric = () => {
         {
           index : _i, name : 'layer_' + _i, id : 'layer-' + _i, 
           shadow : 0.8, url : layer.url, opacity : 1, 
-          animate : true, stretch : false
+          animate : true, stretch : false,
+          rotation: layer.rotation,
+          hasControls : layer.hasControls,
+          isMirrored: layer.isMirrored
         })
 
       fabric.Image.fromURL(layer.url, (i) => {
         i.selectable = false
+        i.hasControls = false
         const w = canvas.width/i.width
         const h = canvas.height/i.height
         const iw = i.width
@@ -125,18 +119,31 @@ const Fabric = () => {
         const setW = iw > cw ? (cw/2 - (iw*scale)/2) : cw/2 - (iw*scale)/2
         const setH = ih > ch ? (ch/2 - (ih*scale)/2) : ch/2 - (ih*scale)/2
 
-        i.set({ left : setW, top : setH}).setCoords()
+        i.set({ 
+            left : cw/2, 
+            top : ch/2,
+            'l': cw/2,
+            't': ch/2,
+            originX : "center", 
+            originY : "center"
+        }).setCoords()
         i.set({'iw' : setW, 'ih' : setH})
+
         i.set('layerId', 'layer-'+_i)
         i.set('stretch', false)
         i.set('isAnimate', true)
-        
+        i.on('moving', function(e){
+          e.transform.target.set({
+            'l' : e.transform.target.left,
+            't' : e.transform.target.top
+          })
+        })
         canvas.add(i)
       })
     })
     dispatch(setUtilLayers(tempArr))
+    dispatch(editorActions.setTransformControls(false))
   }
-
 
   return (
     <div className='flex-col-center h-screen' >

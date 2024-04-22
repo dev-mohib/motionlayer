@@ -63,16 +63,14 @@ export interface LayerType  {
     name : string,
     url : string,
     opacity? : number,
-    shadow? : number
+    shadow? : number,
+    rotation? : number,
+    hasControls? : boolean,
   }
 export interface AnimationType {
     name : string,
     duration : number,  
     chnageValue : number,
-    threeD : {
-      enabled : boolean,
-      skew : number,
-    },
     shadow : {
       enabled : boolean,
       distance : number,
@@ -110,7 +108,8 @@ export interface EditorState {
     videoLength : number,
     isFullScreen : boolean,
     shadow : Shadow,
-    skew : Skew
+    skew : Skew,
+    transformControls : boolean
   }
 
 

@@ -2,7 +2,7 @@ import React, { FC, SVGProps } from 'react'
 
 export const EffectIcon : FC<SVGProps<SVGSVGElement>>  = (props) => {
   return (
-    <svg {...props} stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" 
+    <svg {...props} stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" 
         height="23" width="23" xmlns="http://www.w3.org/2000/svg"
     >
         <path 

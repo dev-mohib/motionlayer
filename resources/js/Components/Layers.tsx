@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ChangeEventHandler, useRef, useState } from 'react'
 import { PlusIcon } from './icons'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
-import { addLayer, setBgColor } from '@/state/store'
+import { editorActions } from '@/state/store'
 import Drggable from './dnd'
 
 
@@ -15,7 +15,7 @@ const Layers = () => {
     const handleAddLayer = (e : ChangeEvent<HTMLInputElement>) => {
       const file = e.target?.files
       if(file)
-      dispatch(addLayer({name : file[0].name,url : URL.createObjectURL(file[0]), index : layers.length}))
+      dispatch(editorActions.addLayer({name : file[0].name,url : URL.createObjectURL(file[0]), index : layers.length}))
     }
     return (
     <div className='p-2' style={{minHeight : '300px'}}>
@@ -42,7 +42,7 @@ const Layers = () => {
       <div className=' my-2 rounded-lg w-auto h-10 flex flex-row cursor-pointer bg-gray-900'>
         {/* <div className='bg-teal-800 w-1/4 h-10 rounded-tl-lg rounded-bl-lg' /> */}
         <input id="upload" type="color" onChange={(e : any) => {
-          dispatch(setBgColor(e.target.value))
+          dispatch(editorActions.setBgColor(e.target.value))
         }} className='w-1/4 h-10 bg-transparent rounded-tl-lg rounded-bl-lg' />
         <div className='bg-gray-900 w-3/4 h-10 rounded-tr-lg rounded-br-lg flex flex-row items-center justify-start pl-2 text-white'>
           Background

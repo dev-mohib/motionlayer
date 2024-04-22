@@ -14,3 +14,6 @@ export { ThreeDIcon } from './three_d'
 export { VerticalArrowIcon } from './vertical_arrow'
 export { DownloadIcon } from './download'
 export { DeleteIcon } from './delete'
+export {FlipIcon} from "./flip"
+export { RotateIcon } from "./rotate"
+export { TransformIcon } from "./transform"

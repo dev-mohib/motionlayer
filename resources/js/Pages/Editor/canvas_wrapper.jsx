@@ -3,12 +3,11 @@ import { downloadCanvas, getSupportedMimeTypes } from '@/utils/canvas'
 
 const Canvas = props => {
   const canvasRef = useRef(null)
-  const imgs = [1,2]
   const draw = (ctx, frameCount) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.fillStyle = '#006699'
     ctx.beginPath()
-    var r1 = 25 + 150 * Math.abs(Math.cos(frameCount));
+    // var r1 = 25 + 150 * Math.abs(Math.cos(frameCount));
     var r2 = 30*Math.sin(frameCount*0.05)**2
     ctx.arc(300, 200, r2, 0, 2*Math.PI)
     ctx.fill()
@@ -44,9 +43,6 @@ const Wrapper = () => {
     const startRecording = () => {
         recordedBlobs = [];
         var mainCanvas = document.querySelector("#myCanvas");
-
-        console.log({canvasEl : mainCanvas});
-
         var stream = mainCanvas.captureStream(30)
   var options = {mimeType: getSupportedMimeTypes()[0]};
 
@@ -59,7 +55,7 @@ const Wrapper = () => {
     }
 
     mediaRecorder.onstop = (event) => {
-        console.log('Recorder stopped: ', event);
+        console.log('Recorder stopped:');
         downloadCanvas(recordedBlobs)
       };
       mediaRecorder.ondataavailable = handleDataAvailable;
@@ -76,12 +72,10 @@ const Wrapper = () => {
         }
     }
     function handleDataAvailable(event) {
-        console.log('recorder chunks', event);
         if (event.data && event.data.size > 0) {
           console.log("Pushing")
           recordedBlobs.push(event.data);
         }
-        console.log("new chunks")
       }
     return (
         <div>

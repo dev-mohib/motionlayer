@@ -2,7 +2,6 @@ import { fabric } from 'fabric'
 
 // Left Right Animation
 export const animateLeftRight = (arr = [], canvas, easeType = "easeInOutQuad", duration = 1000, deltaValue = 20, layers = [], isFirst = false) => {
-  const cw = canvas.getWidth() / 2
   var temp = 10
   
   arr.map((i, j) => {
@@ -15,7 +14,6 @@ export const animateLeftRight = (arr = [], canvas, easeType = "easeInOutQuad", d
       onComplete: function() {
         fabric.runningAnimations.cancelAll()
         _animateLeftRight(arr, canvas, easeType, duration, deltaValue,layers)
-        // i.center()
       },
     });
   })
@@ -24,9 +22,7 @@ export const animateLeftRight = (arr = [], canvas, easeType = "easeInOutQuad", d
 
 const _animateLeftRight = (arr, canvas, easeType = 'easeInOutQuad', duration = 1000, deltaValue = 20, layers = []) => {
   var temp = 10
-  // const cw = canvas.width / 2
   arr.map((i,j) => {
-    // if(!layers[j].animate){return;}
     if(!i.isAnimate){return;}
 
     temp += deltaValue
@@ -37,13 +33,11 @@ const _animateLeftRight = (arr, canvas, easeType = 'easeInOutQuad', duration = 1
       onComplete: function() {
         fabric.runningAnimations.cancelAll()
         animateLeftRight(arr, canvas, easeType, duration, deltaValue,layers)
-        // i.center()
       },
     });
     })
   }
 
-  // Top Bottom Animation
 export const animateTopBottom = (arr, canvas, easeType = 'easeInOutQuad', duration = 1000, deltaValue = 20, layers = [],isFirst = false) => {
   var temp = 10
   arr.map((i,j) => {
@@ -78,11 +72,8 @@ const _animateTopBottom = (arr, canvas, easeType = 'easeInOutQuad', duration = 1
   
 }
 
-
-
-// Opacity Animation
 export const animateOpacity = (arr, canvas, easeType = 'easeInOutQuad', duration = 1000, deltaValue = 20, layers = []) => {
-  arr.map((i,j) => {
+  arr.map((i) => {
     if(!i.isAnimate){return;}
 
     i.animate('opacity', '0', {
@@ -97,7 +88,7 @@ export const animateOpacity = (arr, canvas, easeType = 'easeInOutQuad', duration
   })
 }
 const _animateOpacity = (arr, canvas, easeType = 'easeInOutQuad', duration = 1000, deltaValue = 20, layers = []) => {
-  arr.map((i,j) => {
+  arr.map((i) => {
     if(!i.isAnimate){return;}
     i.animate('opacity', '1', {
       onChange: canvas.renderAll.bind(canvas),
@@ -113,35 +104,26 @@ const _animateOpacity = (arr, canvas, easeType = 'easeInOutQuad', duration = 100
 }
 
 export const animateCircle = (arr, canvas, easeType = "easeInOutQuad", duration = 1000, deltaValue = 20, layers=[], isClockWise = true) => {
-  const cx = canvas.getWidth()/2
-  const cy = canvas.getHeight()/2
   var radius = deltaValue
   var startAngle = fabric.util.getRandomInt(isClockWise ? -180 : 180, 0)
   var endAngle = isClockWise ? startAngle + 359 : startAngle - 359;
   
   function animate(_isFirst = false) {
-    // arr[0].set({ left : cx - (arr[0].width/2), top : cy - (arr[0].height/2)}).setCoords()
-
     fabric.util.animate({
       startValue: startAngle,
       endValue: endAngle,
       duration: duration,
-      easing: fabric.util.ease[easeType],//function(t, b, c, d) { return c*t/d + b; },
+      easing: fabric.util.ease[easeType],
       onChange: function(angle) {
         angle = fabric.util.degreesToRadians(angle);
         var t = 0
-        var left,top
         arr.map((a,j) => { 
           t += 10
           if(!a.isAnimate){return;}
-
           var x =  (radius + t) * Math.cos(angle);
           var y =  (radius + t) * Math.sin(angle);
-          // left = x
-          // top = y
-          // a.set({ left, top}).setCoords()
-          a.left = x + a.iw
-          a.top = y + a.ih
+          a.left = x + a.iw + a.l
+          a.top = y + a.ih + a.t
         })
           canvas.renderAll();
       },
@@ -150,7 +132,6 @@ export const animateCircle = (arr, canvas, easeType = "easeInOutQuad", duration 
   }
   animate(true)
 }
-
 
 export const getObjectById = (canvas, id) => {
 return canvas.forEachObject(obj => {

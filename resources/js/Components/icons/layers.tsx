@@ -3,7 +3,7 @@ import React, { FC, SVGProps } from 'react'
 export const LayerIcon: FC<SVGProps<SVGSVGElement>>  = (props) => {
   return (
     <svg {...props}
-        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" 
+        stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" 
         height="23" width="23" xmlns="http://www.w3.org/2000/svg"
     >
         <path d="M408 480H184a72 72 0 01-72-72V184a72 72 0 0172-72h224a72 72 0 0172 72v224a72 72 0 01-72 72z"></path>

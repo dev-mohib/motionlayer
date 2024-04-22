@@ -1,30 +1,30 @@
 import React from 'react'
-import { LayerIcon, ThreeDIcon } from './icons'
-import { setShadow, setSkew } from '@/state/store'
+import { LayerIcon, ThreeDIcon, TransformIcon } from './icons'
+import { editorActions } from '@/state/store'
 import { useAppSelector,useAppDispatch } from '@/state/hooks'
 
 const Effects = () => {
 
-    const { shadow, skew, isEditing } = useAppSelector(s => s.editorReducer)
+    const { shadow, skew, isEditing, transformControls } = useAppSelector(s => s.editorReducer)
     const dispatch = useAppDispatch()
     return (
       <div className='p-2'>
         <h2 className='font-semibold text-base'>Effects</h2>
         <div className='p-4 rounded bg-slate-600 mx-1 px-2 mt-4 py-2'>
           <div className='flex flex-row justify-between px-3 items-center'>
-            <ThreeDIcon width={25} height={25} color="white" />
+            <TransformIcon width={25} height={25} color="white" />
             <div className='ml-5'>
-              <h2 className='font-semibold text-lg text-gray-400'>3D</h2>
-              <p className='font-extralight text-xs text-gray-400'>Skew the layers to achieve 3D effects</p>
+              <h2 className='font-semibold text-lg text-gray-400'>Transformer</h2>
+              <p className='font-extralight text-xs text-gray-400'>Adjust position, size and rotation of top layer</p>
             </div>
           </div>
           <div className='w-full bg-white rounded-full my-2' style={{height : '1px'}} />
           <div className='flex flex-row justify-between'>
             <span>Enable</span>
             <label className="switch">
-              <input type="checkbox" checked={skew.enabled} onChange={(e) => {
+              <input type="checkbox" checked={transformControls} onChange={(e) => {
                 if(isEditing)
-                dispatch(setSkew({enabled : !skew.enabled}))
+                dispatch(editorActions.setTransformControls(!transformControls))
                 }} />
               <span className="slider round"></span>
             </label>
@@ -46,7 +46,7 @@ const Effects = () => {
             <label className="switch">
               <input type="checkbox" checked={shadow.enabled} onChange={(e) => {
                 if(isEditing)
-                dispatch(setShadow({enabled : !shadow.enabled}))}} />
+                dispatch(editorActions.setShadow({enabled : !shadow.enabled}))}} />
               <span className="slider round"></span>
             </label>
           </div>
