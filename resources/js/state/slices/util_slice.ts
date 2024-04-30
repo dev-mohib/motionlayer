@@ -58,6 +58,9 @@ export const utilSlice = createSlice({
         setUtilLayers : (state, action : PayloadAction<any[]>) => {
             state.layers = action.payload
         },
+        addLayer: (state, action : PayloadAction<any>) => {
+            state.layers = [...state.layers, action.payload]
+        },
         updateUtilLayers : (state, action : PayloadAction<{index: number, data : {shadow? : number, opacity? : number}}>) => {
             if(state.layers.length >= action.payload.index)
             state.layers[action.payload.index] = {

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
-import { setExpandedLayerIndex, setUtilLayers, updateUtilLayers } from "@/state/store";
-import { GridIcon, RotateIcon, TransformIcon, FlipIcon } from './icons'
+import { setUtilLayers, updateUtilLayers, editorActions, utilActions } from "@/state/store";
+import { GridIcon } from './icons'
 
 const reOrder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -14,9 +14,8 @@ const reOrder = (list, startIndex, endIndex) => {
 
 
 function Layer({ list, index }) {
-  const { bgColor, shadow } = useAppSelector(s => s.editorReducer)
+  const { bgColor, shadow, transformLayerId } = useAppSelector(s => s.editorReducer)
   const { expandedLayerIndex } = useAppSelector(s => s.utilReducer)
-
   const dispatch = useAppDispatch()
   return (
     <Draggable draggableId={list.id} index={index}>
@@ -29,9 +28,9 @@ function Layer({ list, index }) {
                 {...provided.dragHandleProps}
                 onClick={() => {
                   if(expandedLayerIndex == index)
-                  dispatch(setExpandedLayerIndex(null))
+                  dispatch(utilActions.setExpandedLayerIndex(null))
                   else
-                  dispatch(setExpandedLayerIndex(index))
+                  dispatch(utilActions.setExpandedLayerIndex(index))
                 }}
                 >
                 <div className='w-12 h-12' style={{backgroundColor : bgColor}}>
@@ -42,7 +41,7 @@ function Layer({ list, index }) {
                     <GridIcon className='hover:text-gray-600 cursor-grabbing' size={20} />
                 </div>
             </div>
-            <div className="rounded-bl-xl rounded-br-xl shadow-xl transition-all" style={{height : expandedLayerIndex == index ? '100px' : '0px'}}>
+            <div className="rounded-bl-xl rounded-br-xl shadow-xl transition-all" style={{height : expandedLayerIndex == index ? '130px' : '0px'}}>
             {expandedLayerIndex == index &&
               <div className="py-1 px-2">
                 {shadow.enabled&&<div ><label htmlFor="speed-range" className="block mb-0.5 text-sm font-medium text-white dark:text-gray-300 flex-row-between pr-3">Shadow <span>{list.shadow}</span></label>
@@ -67,7 +66,12 @@ function Layer({ list, index }) {
                     <input type="checkbox" checked={list.animate} onChange={e => dispatch(updateUtilLayers({index, data : {...list, animate : e.target.checked}}))} />
                   </label>
                 </div>
-
+                <div className='flex flex-row justify-between mt-2'>
+                  <span>Transform</span>
+                  <label className="switch-2">
+                    <input type="checkbox" checked={transformLayerId == list.id ? true : false} onChange={e => dispatch(editorActions.setTransformLayerId(transformLayerId == list.id ? null : list.id))} />
+                  </label>
+                </div>
                 {/* <div className='flex flex-row justify-between mt-2'>
                   <span>Stretch</span>
                   <label className="switch-2">

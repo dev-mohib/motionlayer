@@ -10,7 +10,7 @@ const Fabric = () => {
     const { canvas, objects } = useFabric('myCanvas')
     const [isReload, setRelaod] = useState(false)
     const dispatch = useAppDispatch()
-    const { layers, bgColor, isAnimating, animationName, easeType,animationDelta,animationDuration,shadow, transformControls } = useAppSelector(state => state.editorReducer)
+    const { layers, bgColor, isAnimating, animationName, easeType,animationDelta,animationDuration,shadow, transformLayerId } = useAppSelector(state => state.editorReducer)
     const { layers : tmpLayers } = useAppSelector(s => s.utilReducer)
 
     useEffect(() => {
@@ -54,43 +54,54 @@ const Fabric = () => {
                 obj.isAnimate = false
               }
 
-              if(transformControls && index == 0){
+              // if(transformControls && index == 0){
+              //   obj.selectable = true
+              //   obj.hasControls = true
+              //   canvas.setActiveObject(obj).renderAll();
+              // }else {
+              //   obj.selectable = false
+              //   obj.hasControls = false
+              //   canvas.discardActiveObject().renderAll();
+              // }
+
+              if(transformLayerId == obj.layerId){
+                console.log(obj.layerId, transformLayerId);
                 obj.selectable = true
                 obj.hasControls = true
                 canvas.setActiveObject(obj).renderAll();
               }else {
                 obj.selectable = false
                 obj.hasControls = false
-                canvas.discardActiveObject().renderAll();
               }
             }
           })
         })  
   }
-},[tmpLayers, bgColor, shadow, transformControls, isReload])
-    useMemo(() => {
-      fabric.runningAnimations.cancelAll()
-      if(isAnimating){
-        switch(animationName){
-          case 'Fade':
-            animateOpacity(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers)
-            break;
-          case 'TranslateH':
-            animateLeftRight(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers,true)
-            break;
-          case 'TranslateV':
-            animateTopBottom(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers, true)
-            break;
-          case 'RotateClock':
-            animateCircle(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers, true)
-            break;
-          case 'RotateAntiClock':
-            animateCircle(objects(), canvas, easeType, animationDuration,animationDelta,tmpLayers, false)
-          default:
-            return
-        }
+},[tmpLayers, bgColor, shadow, transformLayerId, isReload])
+
+  useMemo(() => {
+    fabric.runningAnimations.cancelAll()
+    if(isAnimating){
+      switch(animationName){
+        case 'Fade':
+          animateOpacity(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers)
+          break;
+        case 'TranslateH':
+          animateLeftRight(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers,true)
+          break;
+        case 'TranslateV':
+          animateTopBottom(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers, true)
+          break;
+        case 'RotateClock':
+          animateCircle(objects(), canvas, easeType, animationDuration, animationDelta,tmpLayers, true)
+          break;
+        case 'RotateAntiClock':
+          animateCircle(objects(), canvas, easeType, animationDuration,animationDelta,tmpLayers, false)
+        default:
+          return
       }
-    },[isAnimating, animationName, easeType, animationDelta, animationDuration]) 
+    }
+  },[isAnimating, animationName, easeType, animationDelta, animationDuration]) 
 
   const addLayers = () => {
     tempArr = []
@@ -112,13 +123,8 @@ const Fabric = () => {
         i.hasControls = false
         const w = canvas.width/i.width
         const h = canvas.height/i.height
-        const iw = i.width
-        const ih = i.height
         const scale = w < h ? w : h
         i.scale(scale)
-        // const setW = iw > cw ? (cw/2 - (iw*scale)/2) : cw/2 - (iw*scale)/2
-        // const setH = ih > ch ? (ch/2 - (ih*scale)/2) : ch/2 - (ih*scale)/2
-
         i.set({ 
             left : cw/2, 
             top : ch/2,
@@ -127,7 +133,6 @@ const Fabric = () => {
             originX : "center", 
             originY : "center"
         }).setCoords()
-        // i.set({'iw' : setW, 'ih' : setH})
 
         i.set('layerId', 'layer-'+_i)
         i.set('stretch', false)

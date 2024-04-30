@@ -10,12 +10,12 @@ const Effects = () => {
     return (
       <div className='p-2'>
         <h2 className='font-semibold text-base'>Effects</h2>
-        <div className='p-4 rounded bg-slate-600 mx-1 px-2 mt-4 py-2'>
+        {/* <div className='p-4 rounded bg-slate-600 mx-1 px-2 mt-4 py-2'>
           <div className='flex flex-row justify-between px-3 items-center'>
             <TransformIcon width={25} height={25} color="white" />
             <div className='ml-5'>
-              <h2 className='font-semibold text-lg text-gray-400'>Transformer</h2>
-              <p className='font-extralight text-xs text-gray-400'>Adjust position, size and rotation of top layer</p>
+              <h2 className='font-semibold text-lg text-gray-400'>Transform</h2>
+              <p className='font-extralight text-xs text-gray-400'>Adjust layer's position, size and rotation</p>
             </div>
           </div>
           <div className='w-full bg-white rounded-full my-2' style={{height : '1px'}} />
@@ -30,7 +30,7 @@ const Effects = () => {
             </label>
           </div>
           
-        </div>
+        </div> */}
         
         <div className='p-4 rounded bg-slate-600 mx-1 px-2 mt-4 py-2'>
           <div className='flex flex-row justify-between px-3 items-center'>

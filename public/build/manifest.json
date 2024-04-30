@@ -1,27 +1,27 @@
 {
-  "_TextInput-9e92e951.js": {
-    "file": "assets/TextInput-9e92e951.js",
+  "_TextInput-878dce35.js": {
+    "file": "assets/TextInput-878dce35.js",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_hooks-52bf5179.js": {
-    "file": "assets/hooks-52bf5179.js",
+  "_hooks-cef7cde5.js": {
+    "file": "assets/hooks-cef7cde5.js",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
   "resources/js/Pages/Auth/Login.tsx": {
-    "file": "assets/Login-e375219d.js",
+    "file": "assets/Login-ea817d24.js",
     "imports": [
       "resources/js/app.tsx",
-      "_TextInput-9e92e951.js"
+      "_TextInput-878dce35.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Login.tsx"
   },
   "resources/js/Pages/Clean/index.tsx": {
-    "file": "assets/index-0eb437fb.js",
+    "file": "assets/index-a98c3dad.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -29,16 +29,16 @@
     "src": "resources/js/Pages/Clean/index.tsx"
   },
   "resources/js/Pages/Editor/fabric/index.tsx": {
-    "file": "assets/index-f129b0ae.js",
+    "file": "assets/index-5fe7da43.js",
     "imports": [
       "resources/js/app.tsx",
-      "_hooks-52bf5179.js"
+      "_hooks-cef7cde5.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Editor/fabric/index.tsx"
   },
   "resources/js/Pages/Editor/helpers/drawing_screen.tsx": {
-    "file": "assets/drawing_screen-50d9c414.js",
+    "file": "assets/drawing_screen-f0387885.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -46,26 +46,26 @@
     "src": "resources/js/Pages/Editor/helpers/drawing_screen.tsx"
   },
   "resources/js/Pages/Editor/index.tsx": {
-    "file": "assets/index-dbd64a34.js",
+    "file": "assets/index-d95c77c7.js",
     "imports": [
       "resources/js/app.tsx",
-      "_hooks-52bf5179.js",
+      "_hooks-cef7cde5.js",
       "resources/js/Pages/Editor/upload_view.tsx"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Editor/index.tsx"
   },
   "resources/js/Pages/Editor/upload_view.tsx": {
-    "file": "assets/upload_view-b1391690.js",
+    "file": "assets/upload_view-c5c030ac.js",
     "imports": [
       "resources/js/app.tsx",
-      "_hooks-52bf5179.js"
+      "_hooks-cef7cde5.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Editor/upload_view.tsx"
   },
   "resources/js/Pages/Home/index.tsx": {
-    "file": "assets/index-e2544f35.js",
+    "file": "assets/index-e0bf5ff6.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -73,16 +73,16 @@
     "src": "resources/js/Pages/Home/index.tsx"
   },
   "resources/js/Pages/Signin/index.tsx": {
-    "file": "assets/index-5e65e714.js",
+    "file": "assets/index-1f9c71d2.js",
     "imports": [
       "resources/js/app.tsx",
-      "_TextInput-9e92e951.js"
+      "_TextInput-878dce35.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Signin/index.tsx"
   },
   "resources/js/Pages/Welcome.tsx": {
-    "file": "assets/Welcome-c7a2b3fb.js",
+    "file": "assets/Welcome-5f4bede5.js",
     "imports": [
       "resources/js/app.tsx"
     ],
@@ -108,7 +108,7 @@
       "resources/js/Pages/Signin/index.tsx",
       "resources/js/Pages/Welcome.tsx"
     ],
-    "file": "assets/app-e009cc4f.js",
+    "file": "assets/app-ed023301.js",
     "isEntry": true,
     "src": "resources/js/app.tsx"
   }

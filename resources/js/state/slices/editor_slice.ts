@@ -29,7 +29,8 @@ import { LayerType,AnimationType,Shadow,EditorState, Skew } from "@/types/index.
       skewX : 3,
       skewY : 3
     },
-    transformControls : false
+    transformControls : false,
+    transformLayerId : null
     // rotation : 0
   };
 
@@ -124,6 +125,9 @@ export const editorSlice = createSlice({
         },
         setTransformControls: (state, action : PayloadAction<boolean>)=> {
           state.transformControls = action.payload
+        },
+        setTransformLayerId : (state, action : PayloadAction<null | string>) => {
+          state.transformLayerId = action.payload
         }
     }
 });

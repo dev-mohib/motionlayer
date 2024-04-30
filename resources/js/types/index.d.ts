@@ -109,7 +109,8 @@ export interface EditorState {
     isFullScreen : boolean,
     shadow : Shadow,
     skew : Skew,
-    transformControls : boolean
+    transformControls : boolean,
+    transformLayerId : null | string
   }
 
 
