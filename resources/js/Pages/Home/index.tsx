@@ -45,18 +45,18 @@ const Index = () => {
     setSelectedVideo(null)
   }
   return (
-    <div className='flex-c-c w-full bg-gray-600 min-h-screen'>
+    <div className='flex-c-c w-full bg-white min-h-screen'>
         <div className='h-20 bg-gray-700 flex justify-between items-center px-4'>
             <div className={'text-white font-extrabold text-2xl'}>
                 Motion Layer
             </div>
             <Link href={route('motionlayer.editor')}>
-                <div className='btn btn-primary'>Create New</div>
+                <div className='btn text-2xl font-bold bg-gradient-to-tl from-gray-700 to-green-600 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'>Create New</div>
             </Link>
         </div>
         <Head title='Home'/>
         <div className='md:px-10 sm:px-4 lg:px-36 xl:px-64 mt-10'>
-            <h1 className={'text-white font-extrabold px-4 my-3 text-2xl'}>Latest Videos</h1>
+            <h1 className={'text-black font-extrabold px-4 my-3 text-2xl'}>Latest Videos</h1>
             <div className='mt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 '>
                 {videos.data.map(((video, i) => <div key={video.id}><Card onClick={() => handleViewVideo(video)} video={video} /></div>))}
             </div>
@@ -109,15 +109,15 @@ const Card = ({video, onClick}:{video : GalleryVideo, onClick : any}) => {
     return (
         <div
             className=' shadow-lg rounded border-4 border-gray-700'
-         >
+        >
             <a ref={aRef}  href={'/storage/'+ video.source}  hidden download={video.source}></a>
-            <div className='w-full rounded hover:bg-gray-600 cursor-pointer hover:shadow-lg'>
+            <div className='w-full rounded cursor-pointer hover:shadow-lg'>
                 <div onClick={onClick}  className={`w-full ${getColor()}`}>
-                    <img className='object-cover w-full' src={`/storage/`+video.thumbnail}/>
+                    <img className='object-cover w-full' src={`/storage/` + video.thumbnail}/>
                 </div>
-                <div className='flex justify-between'>
-                    <div className=' mt-3'>
-                        <h1 className='text-white font-bold'>{video.title}</h1>
+                <div className='flex justify-between '>
+                    <div className='mt-3'>
+                        <h1 className='text-black font-bold text-lg'>{video.title}</h1>
                     </div>
                     {/* <label htmlFor="dropdown" className="block text-gray-700 font-semibold mb-2">:</label> */}
                     {/* <select id="dropdown" className="block  p-0.5 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
