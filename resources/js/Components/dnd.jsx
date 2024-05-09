@@ -41,7 +41,7 @@ function Layer({ list, index }) {
                     <GridIcon className='hover:text-gray-600 cursor-grabbing' size={20} />
                 </div>
             </div>
-            <div className="rounded-bl-xl rounded-br-xl shadow-xl transition-all" style={{height : expandedLayerIndex == index ? '130px' : '0px'}}>
+            <div className="rounded-bl-xl rounded-br-xl shadow-xl transition-all" style={{height : expandedLayerIndex == index ? '220px' : '0px'}}>
             {expandedLayerIndex == index &&
               <div className="py-1 px-2">
                 {shadow.enabled&&<div ><label htmlFor="speed-range" className="block mb-0.5 text-sm font-medium text-white dark:text-gray-300 flex-row-between pr-3">Shadow <span>{list.shadow}</span></label>
@@ -70,6 +70,39 @@ function Layer({ list, index }) {
                   <span>Transform</span>
                   <label className="switch-2">
                     <input type="checkbox" checked={transformLayerId == list.id ? true : false} onChange={e => dispatch(editorActions.setTransformLayerId(transformLayerId == list.id ? null : list.id))} />
+                  </label>
+                </div>
+
+                <div className='flex flex-row justify-between mt-2'>
+                  <span>Rotate</span>
+                  <label className="switch-2">
+                    <input type="checkbox" checked={list.animation == "rotate" ? true: false} onChange={e => dispatch(updateUtilLayers({index, data : {...list, animation : e.target.checked ? "rotate" : null}}))} />
+                  </label>
+                </div>
+                <div className='flex flex-row justify-between mt-2'>
+                  <span>Pendulum</span>
+                  <label className="switch-2">
+                    <input type="checkbox" checked={list.animation == "pendulum" ? true: false} onChange={e => dispatch(updateUtilLayers({index, data : {...list, animation : e.target.checked ? "pendulum" : null}}))} />
+                  </label>
+                </div>
+
+                <div className='flex flex-row justify-between mt-2'>
+                  <span>Origin Y</span>
+                  <label className="switch-2">
+                    <input type="button" 
+                      className="bg-gray-700 text-white rounded-md px-2 py-1 cursor-pointer"
+                      value={list.originY??"Center"}
+                      onClick={e => {
+                        if(list.originY == "center"){
+                          dispatch(updateUtilLayers({index, data : {...list, originY : "top"}}))
+                        }
+                        else if(list.originY == "top"){
+                          dispatch(updateUtilLayers({index, data : {...list, originY : "bottom"}}))
+                        }
+                        else{
+                          dispatch(updateUtilLayers({index, data : {...list, originY : "center"}}))
+                        }
+                    }} />
                   </label>
                 </div>
                 {/* <div className='flex flex-row justify-between mt-2'>

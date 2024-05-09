@@ -66,7 +66,9 @@ export interface LayerType  {
     shadow? : number,
     rotation? : number,
     hasControls? : boolean,
-  }
+    animation?: null | "rotate" | "pendulum",
+    originY?: "center" | "top" | "bottom"
+}
 export interface AnimationType {
     name : string,
     duration : number,  
@@ -110,7 +112,7 @@ export interface EditorState {
     shadow : Shadow,
     skew : Skew,
     transformControls : boolean,
-    transformLayerId : null | string
+    transformLayerId : null | string,
   }
 
 

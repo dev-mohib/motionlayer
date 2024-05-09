@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { fabric } from 'fabric'
 import { useFabric } from '@/utils/hooks'
 import { useAppDispatch, useAppSelector } from '@/state/hooks'
-import { animateLeftRight, animateOpacity, animateTopBottom, animateCircle,getObjectById } from './animations'
+import { animateLeftRight, animateOpacity, animateTopBottom, animateCircle, secondAnimation } from './animations'
 import { editorActions, setUtilLayers } from '@/state/store'
 let tempArr = []
 
@@ -54,18 +54,27 @@ const Fabric = () => {
                 obj.isAnimate = false
               }
 
-              // if(transformControls && index == 0){
-              //   obj.selectable = true
-              //   obj.hasControls = true
-              //   canvas.setActiveObject(obj).renderAll();
-              // }else {
-              //   obj.selectable = false
-              //   obj.hasControls = false
-              //   canvas.discardActiveObject().renderAll();
-              // }
+              if(layer.animation == "rotate"){
+                obj.secondAnimation = "rotate"
+              }else if(layer.animation == "pendulum"){
+                obj.secondAnimation = "pendulum"
+              }else{
+                obj.secondAnimation = null
+              }
+              if(layer.originY == "center"){
+                obj.set({
+                  'originY': 'center',
+                })
+              }else if(layer.originY == "top"){
+                obj.set({
+                  'originY': 'top',
+                })
+              }
+              else if(layer.originY == "bottom"){
+                obj.set({'originY': 'bottom'})
+              }
 
               if(transformLayerId == obj.layerId){
-                console.log(obj.layerId, transformLayerId);
                 obj.selectable = true
                 obj.hasControls = true
                 canvas.setActiveObject(obj).renderAll();
@@ -115,7 +124,8 @@ const Fabric = () => {
           animate : true, stretch : false,
           rotation: layer.rotation,
           hasControls : layer.hasControls,
-          isMirrored: layer.isMirrored
+          isMirrored: layer.isMirrored,
+          originY : 'center'
         })
 
       fabric.Image.fromURL(layer.url, (i) => {
