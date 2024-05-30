@@ -1,0 +1,1 @@
+import{o as e,p as n,q as c,t as a}from"./app-30f90d44.js";function r(t=e){const o=t===e?n:c(t);return function(){const{store:s}=o();return s}}const p=r();function i(t=e){const o=t===e?p:r(t);return function(){return o().dispatch}}const x=i(),d=()=>x(),f=a;export{d as a,f as u};

@@ -23,7 +23,7 @@ export const animateLeftRight = (arr = [], canvas, easeType = "easeInOutQuad", d
 const _animateLeftRight = (arr, canvas, easeType = 'easeInOutQuad', duration = 1000, deltaValue = 20, layers = []) => {
   var temp = 10
   secondAnimation(canvas, duration)
-  arr.ForEach((i,j) => {
+  arr.forEach((i,j) => {
     if(!i.isAnimate){return;}
     temp += deltaValue
     i.animate('left', `-=${temp}`, {
